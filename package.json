@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "opencode-ai": "^1.14.41",
+    "pocketbase": "^0.26.8"
+  }
+}

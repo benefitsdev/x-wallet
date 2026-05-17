@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# PocketBase
+database/pocketbase
+database/pb_data/
+database/pb_*.db
+
+# Environment files
+.env
+app/.env
+
+# Build output
+app/dist/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
