@@ -1,162 +1,96 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useWallet } from '@/hooks/useWallet'
-import { useTransactions } from '@/hooks/useTransactions'
-import { isValidAddress, formatAmount } from '@/lib/utils'
-import { getBalance, formatEth } from '@/lib/ethers'
-import { config } from '@/config'
-import Button from '@/components/ui/Button'
-import Input from '@/components/ui/Input'
-import Card from '@/components/ui/Card'
+import { ChevronDown, Copy, Info, ChevronLeft, Layers } from 'lucide-react'
 
 export default function Send() {
   const navigate = useNavigate()
   const { wallets, fetchWallets } = useWallet()
-  const { sendTransaction, isLoading: isSending, error: txError } = useTransactions()
-
-  const [selectedWalletId, setSelectedWalletId] = useState('')
   const [toAddress, setToAddress] = useState('')
-  const [amount, setAmount] = useState('')
-  const [localError, setLocalError] = useState('')
-  const [balance, setBalance] = useState('')
-  const [success, setSuccess] = useState(false)
 
   useEffect(() => {
     fetchWallets()
   }, [fetchWallets])
 
-  useEffect(() => {
-    if (selectedWalletId && wallets.length > 0) {
-      const wallet = wallets.find((w) => w.id === selectedWalletId)
-      if (wallet) {
-        getBalance(wallet.public_address).then((wei) => {
-          setBalance(formatEth(wei))
-        })
-      }
-    }
-  }, [selectedWalletId, wallets])
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLocalError('')
-    setSuccess(false)
-
-    if (!selectedWalletId) {
-      setLocalError('Please select a wallet')
-      return
-    }
-    if (!isValidAddress(toAddress)) {
-      setLocalError('Invalid recipient address')
-      return
-    }
-    if (!amount || parseFloat(amount) <= 0) {
-      setLocalError('Invalid amount')
-      return
-    }
-    if (parseFloat(amount) > parseFloat(balance || '0')) {
-      setLocalError('Insufficient balance')
-      return
-    }
-
-    try {
-      const wallet = wallets.find((w) => w.id === selectedWalletId)
-      if (!wallet) return
-      await sendTransaction(wallet, toAddress, amount)
-      setSuccess(true)
-      setAmount('')
-      setToAddress('')
-    } catch {
-      // error set via hook
-    }
-  }
-
-  if (success) {
-    return (
-      <div className="max-w-lg mx-auto space-y-6">
-        <Card>
-          <div className="text-center py-8 space-y-4">
-            <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto">
-              <span className="text-success text-2xl">✓</span>
-            </div>
-            <h2 className="text-xl font-semibold text-foreground">Transaction Sent!</h2>
-            <p className="text-muted-foreground text-sm">
-              Your transaction has been broadcast to the network.
-            </p>
-            <div className="flex gap-3 justify-center">
-              <Button onClick={() => setSuccess(false)}>Send Another</Button>
-              <Button variant="secondary" onClick={() => navigate('/transactions')}>
-                View History
-              </Button>
-            </div>
-          </div>
-        </Card>
-      </div>
-    )
-  }
+  const wallet = wallets[0]
+  const address = wallet?.public_address || '0xe51000000000000000000000000000000005278'
+  const shortAddress = `${address.slice(0, 9)}...${address.slice(-8)}`
 
   return (
-    <div className="max-w-lg mx-auto space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Send {config.assetSymbol}</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Transfer funds to another wallet
-        </p>
+    <div className="flex flex-col absolute inset-0 bg-[#323232] text-white font-sans overflow-hidden">
+      {/* Custom Header */}
+      <div className="flex items-center justify-between px-8 py-6 z-10">
+        <div className="flex items-center space-x-4">
+          <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-[#FF9500] via-[#FF2D55] to-[#007AFF] shadow-md"></div>
+          <div>
+            <p className="font-bold text-[16px] tracking-wide">{wallet?.label || 'Account 1'}</p>
+            <div className="flex items-center text-[#8E8E93] text-[13px] mt-0.5 space-x-2">
+              <span className="font-mono tracking-wider">{shortAddress}</span>
+              <button className="hover:text-white transition-colors opacity-70 hover:opacity-100"><Copy size={14} /></button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="w-10 h-10 bg-gradient-to-br from-[#3B82F6] to-[#1D4ED8] rounded-[10px] flex items-center justify-center shadow-lg relative">
+             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-[10px]"></div>
+             <span className="text-white font-extrabold text-[18px] shadow-sm relative z-10 leading-none">X</span>
+          </div>
+        </div>
       </div>
 
-      <Card>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex flex-col gap-1.5">
-            <label className="text-sm text-muted-foreground font-medium">From Wallet</label>
-            <select
-              value={selectedWalletId}
-              onChange={(e) => setSelectedWalletId(e.target.value)}
-              className="h-10 px-3 rounded-lg bg-background border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-              required
-            >
-              <option value="">Select a wallet</option>
-              {wallets.map((w) => (
-                <option key={w.id} value={w.id}>
-                  {w.label}
-                </option>
-              ))}
-            </select>
-            {balance && (
-              <span className="text-xs text-muted-foreground">
-                Balance: {formatAmount(balance, config.assetSymbol)}
-              </span>
-            )}
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col items-center pt-[10vh] px-4 z-10 relative">
+        <div className="w-full max-w-[540px] bg-[#111111] rounded-[12px] p-8 shadow-2xl border border-white/5">
+          <h2 className="text-center font-bold text-[22px] mb-8 text-white tracking-wide">Send</h2>
+
+          <div className="space-y-8">
+            <div className="space-y-3">
+              <label className="text-[14px] text-[#A0A0A5] font-medium block">Add recipient</label>
+              <div className="relative">
+                <input 
+                  type="text" 
+                  value={toAddress}
+                  onChange={(e) => setToAddress(e.target.value)}
+                  placeholder="Address / ENS" 
+                  className="w-full bg-[#18181A] border border-white/10 rounded-[8px] py-4 pl-4 pr-12 text-[15px] text-white focus:outline-none focus:border-[#007AFF]/50 transition-colors placeholder:text-[#55555A]"
+                />
+                <ChevronDown size={20} className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#55555A]" />
+              </div>
+            </div>
+
+            <div className="space-y-3 pb-2">
+              <label className="text-[14px] text-[#A0A0A5] font-medium block">Select token</label>
+              <div className="w-full h-[140px] bg-[#333333] rounded-[8px] border border-transparent shadow-inner"></div>
+            </div>
           </div>
+        </div>
+      </div>
 
-          <Input
-            label="Recipient Address"
-            value={toAddress}
-            onChange={(e) => setToAddress(e.target.value)}
-            placeholder="0x..."
-            required
-          />
+      {/* Footer */}
+      <div className="absolute bottom-0 left-0 w-full h-[85px] bg-[#111A2B] border-t border-[#1C2A44] flex items-center justify-between px-8 z-50">
+        <button 
+          onClick={() => navigate('/')}
+          className="flex items-center space-x-2 text-[#007AFF] border border-[#007AFF] px-7 py-2.5 rounded-[8px] hover:bg-[#007AFF]/10 transition-colors font-medium text-[15px]"
+        >
+          <ChevronLeft size={18} strokeWidth={2.5} />
+          <span>Back</span>
+        </button>
 
-          <Input
-            label="Amount"
-            type="number"
-            step="0.000001"
-            min="0"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            placeholder={`0.00 ${config.assetSymbol}`}
-            required
-          />
+        <div className="flex items-center space-x-6">
+          <button className="flex items-center space-x-3 text-[#007AFF] border border-[#007AFF]/30 px-6 py-2.5 rounded-[8px] hover:bg-[#007AFF]/10 transition-colors font-medium text-[15px]">
+            <span>Start a batch</span>
+            <Layers size={18} strokeWidth={2} />
+          </button>
+          
+          <button className="text-[#8E8E93] hover:text-white transition-colors">
+            <Info size={22} />
+          </button>
 
-          {(localError || txError) && (
-            <p className="text-sm text-destructive bg-destructive/10 rounded-lg p-3">
-              {localError || txError}
-            </p>
-          )}
-
-          <Button type="submit" isLoading={isSending} className="w-full">
-            Send {config.assetSymbol}
-          </Button>
-        </form>
-      </Card>
+          <button className="bg-[#007AFF] text-white px-10 py-2.5 rounded-[8px] font-semibold hover:bg-[#005bb5] transition-colors text-[15px] shadow-[0_0_15px_rgba(0,122,255,0.4)]">
+            Proceed
+          </button>
+        </div>
+      </div>
     </div>
   )
 }

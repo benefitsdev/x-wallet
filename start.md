@@ -1,4 +1,4 @@
 ./database/start.sh
 
-cd app && npm run dev
+cd app && sudo npm run dev
 

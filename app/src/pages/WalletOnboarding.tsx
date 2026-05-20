@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import { clearLoggedOut } from '@/lib/storage'
 import { useWallet } from '@/hooks/useWallet'
 import OnboardingLanding from '@/components/wallet/OnboardingLanding'
+import SecurityTips from '@/components/wallet/SecurityTips'
 import MnemonicDisplay from '@/components/wallet/MnemonicDisplay'
 import WalletImporter from '@/components/wallet/WalletImporter'
-import Confirmation from '@/components/wallet/Confirmation'
+import ConfirmationScreen from '@/components/wallet/ConfirmationScreen'
+import ReadyScreen from '@/components/wallet/ReadyScreen'
 import { createRandomWallet } from '@/lib/ethers'
 
-type Step = 'landing' | 'create' | 'import' | 'confirm'
+type Step = 'landing' | 'security' | 'create' | 'import' | 'loading_confirm' | 'confirm' | 'ready'
 
 export default function WalletOnboarding() {
   const navigate = useNavigate()
@@ -33,7 +35,20 @@ export default function WalletOnboarding() {
     }
   }, [wallets, navigate])
 
+  useEffect(() => {
+    if (step === 'loading_confirm') {
+      const timer = setTimeout(() => {
+        setStep('confirm')
+      }, 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [step])
+
   const handleCreate = () => {
+    setStep('security')
+  }
+
+  const handleContinueCreate = () => {
     const w = createRandomWallet()
     setGeneratedMnemonic(w.mnemonic?.phrase || '')
     setGeneratedWallet({
@@ -58,7 +73,7 @@ export default function WalletOnboarding() {
       setResultAddress(generatedWallet.address)
       setResultLabel(`Wallet ${generatedWallet.address.slice(0, 6)}`)
       setResultType('created')
-      setStep('confirm')
+      setStep('loading_confirm')
     } catch (err) {
       isCompleting.current = false
       setError(err instanceof Error ? err.message : 'Failed to save wallet')
@@ -73,7 +88,7 @@ export default function WalletOnboarding() {
       setResultAddress(record.public_address)
       setResultLabel(record.label)
       setResultType('imported')
-      setStep('confirm')
+      setStep('loading_confirm')
     } catch (err) {
       isCompleting.current = false
       setError(err instanceof Error ? err.message : 'Failed to import wallet')
@@ -100,11 +115,18 @@ export default function WalletOnboarding() {
           <OnboardingLanding onCreate={handleCreate} onImport={() => setStep('import')} />
         )}
 
+        {step === 'security' && (
+          <SecurityTips
+            onNext={handleContinueCreate}
+            onBack={() => setStep('landing')}
+          />
+        )}
+
         {step === 'create' && generatedMnemonic && (
           <MnemonicDisplay
             mnemonic={generatedMnemonic}
             onConfirm={handleFinishCreate}
-            onBack={handleGoBack}
+            onBack={() => setStep('security')}
           />
         )}
 
@@ -115,12 +137,26 @@ export default function WalletOnboarding() {
           />
         )}
 
+        {step === 'loading_confirm' && (
+          <div className="flex flex-col items-center justify-center space-y-6 py-12">
+            <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+            <h2 className="text-xl font-medium text-foreground animate-pulse">
+              Adding wallet...
+            </h2>
+          </div>
+        )}
+
         {step === 'confirm' && (
-          <Confirmation
+          <ConfirmationScreen
             address={resultAddress}
             label={resultLabel}
             type={resultType}
+            onComplete={() => setStep('ready')}
           />
+        )}
+
+        {step === 'ready' && (
+          <ReadyScreen />
         )}
       </div>
     </div>

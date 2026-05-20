@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import { Copy } from 'lucide-react'
-import Button from '@/components/ui/Button'
-import Toast from '@/components/ui/Toast'
+import { ChevronLeft, Copy } from 'lucide-react'
 
 interface Props {
   mnemonic: string
@@ -10,65 +8,76 @@ interface Props {
 }
 
 export default function MnemonicDisplay({ mnemonic, onConfirm, onBack }: Props) {
-  const [confirmed, setConfirmed] = useState(false)
-  const [toastVisible, setToastVisible] = useState(false)
+  const [copied, setCopied] = useState(false)
   const words = mnemonic.split(' ')
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(mnemonic)
-    setToastVisible(true)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   return (
-    <div className="max-w-lg mx-auto space-y-6">
-      <div className="text-center space-y-2">
-        <h1 className="text-2xl font-bold text-foreground">Your Seed Phrase</h1>
-        <p className="text-muted-foreground text-sm">
-          Write down these 12 words in order. Never share them with anyone.
-        </p>
+    <div className="fixed inset-0 bg-[#282828] flex items-center justify-center font-sans z-50">
+      {/* Top right logo */}
+      <div className="fixed top-6 right-6">
+        <img src="/logo.png" alt="Logo" className="w-8 h-8" />
       </div>
 
-      <div className="bg-background border border-border rounded-xl p-4">
-        <div className="grid grid-cols-3 gap-2">
-          {words.map((word, i) => (
-            <div
-              key={i}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-card text-sm"
+      {/* Main Card */}
+      <div className="bg-[#111111] rounded-2xl w-[90%] max-w-[420px] flex flex-col shadow-2xl overflow-hidden">
+        {/* Progress bar at the very top */}
+        <div className="w-full h-1 bg-[#1A1A1A] flex">
+          <div className="h-full bg-[#1CD172] w-[45%] rounded-r-full"></div>
+        </div>
+
+        <div className="p-6 sm:p-8">
+          <div className="flex items-center gap-3 mb-6">
+            <button onClick={onBack} className="text-[#A0A0A0] hover:text-white transition-colors">
+              <ChevronLeft size={24} />
+            </button>
+            <h1 className="text-white text-lg font-semibold">
+              Back up recovery phrase
+            </h1>
+          </div>
+
+          <p className="text-[#A0A0A0] text-[15px] mb-8 text-center max-w-[280px] mx-auto leading-snug">
+            Write down and secure the recovery phrase for your account.
+          </p>
+
+          <div className="grid grid-cols-3 gap-[1px] bg-[#333] border border-[#333] rounded-lg overflow-hidden mb-6">
+            {words.map((word, i) => (
+              <div
+                key={i}
+                className="bg-[#111111] p-2 flex flex-col items-center justify-center relative h-[60px]"
+              >
+                <span className="absolute top-1.5 left-2 text-[#777] text-[11px]">{i + 1}.</span>
+                <span className="text-white text-[14px] font-medium mt-1">{word}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex justify-center mb-8">
+            <button
+              onClick={handleCopy}
+              className="flex items-center gap-2 text-[#1880ff] text-[14px] font-medium hover:opacity-80 transition-opacity"
             >
-              <span className="text-muted-foreground text-xs w-5 text-right">{i + 1}.</span>
-              <span className="text-foreground font-mono font-medium">{word}</span>
-            </div>
-          ))}
+              {copied ? 'Copied!' : 'Copy recovery phrase'}
+              <Copy size={16} />
+            </button>
+          </div>
+
+          <button
+            onClick={onConfirm}
+            className="w-full py-3.5 rounded-lg font-medium text-[15px] transition-colors bg-[#1880ff] hover:bg-[#156DEC] text-white"
+          >
+            I've saved the phrase
+          </button>
         </div>
       </div>
 
-      <Button variant="secondary" onClick={handleCopy} className="w-full">
-        <Copy size={16} />
-        Copy to Clipboard
-      </Button>
-
-      <label className="flex items-start gap-3 cursor-pointer">
-        <input
-          type="checkbox"
-          checked={confirmed}
-          onChange={(e) => setConfirmed(e.target.checked)}
-          className="mt-1 h-4 w-4 rounded border-border bg-card text-primary focus:ring-ring"
-        />
-        <span className="text-sm text-muted-foreground">
-          I have saved my seed phrase in a secure location. I understand that if I lose it, my wallet cannot be recovered.
-        </span>
-      </label>
-
-      <div className="flex gap-3">
-        <Button variant="secondary" onClick={onBack} className="flex-1">
-          Back
-        </Button>
-        <Button onClick={onConfirm} disabled={!confirmed} className="flex-1">
-          Continue
-        </Button>
-      </div>
-
-      <Toast message="Copied to clipboard!" isVisible={toastVisible} onClose={() => setToastVisible(false)} />
+      {/* Bottom handle */}
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-8 h-[6px] border-[1.5px] border-[#555] rounded-full"></div>
     </div>
   )
 }

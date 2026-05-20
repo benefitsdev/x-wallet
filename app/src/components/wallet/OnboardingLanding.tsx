@@ -1,5 +1,4 @@
-import { config } from '@/config'
-import { Wallet, Download } from 'lucide-react'
+import { Binoculars } from 'lucide-react'
 
 interface Props {
   onCreate: () => void
@@ -8,39 +7,43 @@ interface Props {
 
 export default function OnboardingLanding({ onCreate, onImport }: Props) {
   return (
-    <div className="space-y-8 text-center">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold text-foreground">Welcome to {config.appName}</h1>
-        <p className="text-muted-foreground">Get started by creating a new wallet or importing an existing one</p>
+    <div className="fixed inset-0 bg-[#282828] flex items-center justify-center font-sans z-50">
+      <div className="fixed top-6 right-6">
+        <img src="/logo.png" alt="Logo" className="w-8 h-8" />
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 max-w-xl mx-auto">
+      <div className="bg-[#111111] rounded-2xl p-8 w-[90%] max-w-[420px] flex flex-col items-center shadow-2xl">
+        <img src="/logo.png" alt="XWallet" className="w-[100px] h-[100px] mb-6" />
+
+        <h1 className="text-[#A0A0A0] text-center text-[15px] mb-8 leading-relaxed font-medium px-4">
+          The Web3 wallet that makes self-custody<br/>easy and secure.
+        </h1>
+
         <button
           onClick={onCreate}
-          className="flex flex-col items-center gap-4 p-8 rounded-xl bg-card border border-border hover:border-primary/50 hover:bg-accent transition-all group text-left cursor-pointer"
+          className="w-full bg-[#1880ff] hover:bg-[#156DEC] text-white font-medium py-3.5 rounded-lg mb-4 transition-colors text-[15px]"
         >
-          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-            <Wallet size={32} className="text-primary" />
-          </div>
-          <div className="space-y-1">
-            <h2 className="text-lg font-semibold text-foreground">Create New Wallet</h2>
-            <p className="text-sm text-muted-foreground">Generate a new Ethereum wallet with a secure seed phrase</p>
-          </div>
+          Create new account
         </button>
 
         <button
           onClick={onImport}
-          className="flex flex-col items-center gap-4 p-8 rounded-xl bg-card border border-border hover:border-primary/50 hover:bg-accent transition-all group text-left cursor-pointer"
+          className="w-full bg-transparent border border-[#333] hover:border-[#444] text-[#1880ff] font-medium py-3.5 rounded-lg mb-8 transition-colors text-[15px]"
         >
-          <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-            <Download size={32} className="text-accent" />
-          </div>
-          <div className="space-y-1">
-            <h2 className="text-lg font-semibold text-foreground">Import Wallet</h2>
-            <p className="text-sm text-muted-foreground">Import an existing wallet using your private key or seed phrase</p>
-          </div>
+          Import existing account
+        </button>
+
+        <button className="flex items-center justify-center gap-2 text-[#1880ff] text-[15px] font-medium hover:opacity-80 mb-6">
+          Watch an address
+          <Binoculars size={18} />
+        </button>
+
+        <button className="text-[#1880ff] text-[13px] hover:opacity-80 underline underline-offset-4 decoration-1 opacity-90">
+          Network Configuration
         </button>
       </div>
+
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-8 h-[6px] border-[1.5px] border-[#555] rounded-full"></div>
     </div>
   )
 }
