@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "XWallet",
+  "version": "1.0.0",
+  "description": "Secure Digital Asset Wallet - Send & Receive ETH",
+  "icons": {
+    "16": "public/icon16.png",
+    "48": "public/icon48.png",
+    "128": "public/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "public/icon16.png",
+      "48": "public/icon48.png"
+    }
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://ethereum-rpc.publicnode.com",
+    "http://0.0.0.0:8090/*",
+    "http://localhost:8090/*",
+    "http://localhost:5173/*"
+  ]
+}

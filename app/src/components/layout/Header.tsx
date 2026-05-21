@@ -1,11 +1,19 @@
 import { Link } from 'react-router-dom'
-import { Globe, ShieldCheck } from 'lucide-react'
+import { Globe, ShieldCheck, ExternalLink } from 'lucide-react'
 
 interface HeaderProps {
-  onMenuClick: () => void
+  onMenuClick?: () => void
 }
 
-export default function Header({ onMenuClick }: HeaderProps) {
+const isPopup = typeof chrome !== 'undefined' && !!chrome.runtime?.id && window.location.pathname.includes('popup.html')
+
+const openFullApp = () => {
+  if (typeof chrome !== 'undefined' && chrome.runtime?.id) {
+    window.open(chrome.runtime.getURL('index.html'), '_blank')
+  }
+}
+
+export default function Header({ onMenuClick: _onMenuClick }: HeaderProps) {
   return (
     <header className="h-[72px] flex items-center justify-between px-6 shrink-0 bg-[#0B0B0D]">
       <div className="flex items-center gap-3">
@@ -19,7 +27,16 @@ export default function Header({ onMenuClick }: HeaderProps) {
         </Link>
       </div>
 
-      <div className="flex items-center">
+      <div className="flex items-center gap-3">
+        {isPopup && (
+          <button
+            onClick={openFullApp}
+            className="flex items-center space-x-1.5 text-xs text-[#007AFF] hover:text-blue-400 transition-colors font-semibold"
+          >
+            <ExternalLink size={14} />
+            <span>Open Full App</span>
+          </button>
+        )}
         {/* Public / Private Toggle */}
         <div className="flex bg-[#262626] rounded-full p-1 border border-white/5 items-center">
           <button className="flex items-center space-x-1.5 bg-[#007AFF] text-white px-4 py-1.5 rounded-full text-[13px] font-semibold shadow-sm">

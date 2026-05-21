@@ -1,7 +1,33 @@
-import type { WalletRecord, Transaction } from '@/types'
+import type { WalletRecord } from '@/types'
 
 const WALLETS_KEY = 'xw_wallets'
 const LOGGED_OUT_KEY = 'xw_loggedOut'
+
+const isExtension = typeof chrome !== 'undefined' && !!chrome.storage?.local
+
+async function getItem(key: string): Promise<string | null> {
+  if (isExtension) {
+    const result = await chrome.storage.local.get(key)
+    return (result[key] as string) ?? null
+  }
+  return localStorage.getItem(key)
+}
+
+async function setItem(key: string, value: string): Promise<void> {
+  if (isExtension) {
+    await chrome.storage.local.set({ [key]: value })
+  } else {
+    localStorage.setItem(key, value)
+  }
+}
+
+async function removeItem(key: string): Promise<void> {
+  if (isExtension) {
+    await chrome.storage.local.remove(key)
+  } else {
+    localStorage.removeItem(key)
+  }
+}
 
 export function generateId(): string {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
@@ -12,38 +38,39 @@ export function generateId(): string {
   return id
 }
 
-export function getWallets(): WalletRecord[] {
+export async function getWallets(): Promise<WalletRecord[]> {
   try {
-    const raw = localStorage.getItem(WALLETS_KEY)
+    const raw = await getItem(WALLETS_KEY)
     return raw ? JSON.parse(raw) : []
   } catch {
     return []
   }
 }
 
-function saveWallets(wallets: WalletRecord[]): void {
-  localStorage.setItem(WALLETS_KEY, JSON.stringify(wallets))
+async function saveWallets(wallets: WalletRecord[]): Promise<void> {
+  await setItem(WALLETS_KEY, JSON.stringify(wallets))
 }
 
-export function addWallet(wallet: WalletRecord): void {
-  const wallets = getWallets()
+export async function addWallet(wallet: WalletRecord): Promise<void> {
+  const wallets = await getWallets()
   wallets.unshift(wallet)
-  saveWallets(wallets)
+  await saveWallets(wallets)
 }
 
-export function clearAll(): void {
-  localStorage.removeItem(WALLETS_KEY)
-  localStorage.removeItem(LOGGED_OUT_KEY)
+export async function clearAll(): Promise<void> {
+  await removeItem(WALLETS_KEY)
+  await removeItem(LOGGED_OUT_KEY)
 }
 
-export function isLoggedOut(): boolean {
-  return localStorage.getItem(LOGGED_OUT_KEY) === 'true'
+export async function isLoggedOut(): Promise<boolean> {
+  const val = await getItem(LOGGED_OUT_KEY)
+  return val === 'true'
 }
 
-export function setLoggedOut(): void {
-  localStorage.setItem(LOGGED_OUT_KEY, 'true')
+export async function setLoggedOut(): Promise<void> {
+  await setItem(LOGGED_OUT_KEY, 'true')
 }
 
-export function clearLoggedOut(): void {
-  localStorage.removeItem(LOGGED_OUT_KEY)
+export async function clearLoggedOut(): Promise<void> {
+  await removeItem(LOGGED_OUT_KEY)
 }

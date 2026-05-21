@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, Navigate, Link } from 'react-router-dom'
+import { Routes, Route, Link } from 'react-router-dom'
 import { useWallet } from '@/hooks/useWallet'
 import { isLoggedOut, clearLoggedOut } from '@/lib/storage'
 import AppLayout from '@/components/layout/AppLayout'
@@ -16,12 +16,17 @@ import AdminUsers from '@/pages/admin/AdminUsers'
 import AdminSettings from '@/pages/admin/AdminSettings'
 
 function HasWalletGuard({ children }: { children: React.ReactNode }) {
-  const { wallets, fetchWallets } = useWallet()
+  const { fetchWallets } = useWallet()
   const [firstLoadDone, setFirstLoadDone] = useState(false)
+  const [loggedOut, setLoggedOut] = useState(false)
 
   useEffect(() => {
     fetchWallets().finally(() => setFirstLoadDone(true))
   }, [fetchWallets])
+
+  useEffect(() => {
+    isLoggedOut().then(setLoggedOut)
+  }, [])
 
   if (!firstLoadDone) {
     return (
@@ -31,7 +36,7 @@ function HasWalletGuard({ children }: { children: React.ReactNode }) {
     )
   }
 
-  if (isLoggedOut()) {
+  if (loggedOut) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-background">
         <div className="text-center space-y-4">

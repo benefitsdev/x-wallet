@@ -33,9 +33,9 @@ const adminItems = [
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const navigate = useNavigate()
 
-  const handleLogout = () => {
-    clearAll()
-    setLoggedOut()
+  const handleLogout = async () => {
+    await clearAll()
+    await setLoggedOut()
     navigate('/onboard', { replace: true })
   }
 

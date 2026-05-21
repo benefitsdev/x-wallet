@@ -9,7 +9,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const wallets = getWallets()
+        const wallets = await getWallets()
         setStats({
           wallets: wallets.length,
           transactions: 0,

@@ -13,7 +13,7 @@ export default function AdminUsers() {
   useEffect(() => {
     const fetchWallets = async () => {
       try {
-        const records = getWallets()
+        const records = await getWallets()
         setWallets(records)
       } catch {
         // silently fail

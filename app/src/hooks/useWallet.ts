@@ -20,7 +20,7 @@ export function useWallet() {
     setIsLoading(true)
     setError(null)
     try {
-      const records = getWallets()
+      const records = await getWallets()
       console.warn(records)
       setWallets(records)
     } catch (err) {
@@ -46,7 +46,7 @@ export function useWallet() {
           created: now,
           updated: now,
         }
-        addWallet(record)
+        await addWallet(record)
         setWallets((prev) => [record, ...prev])
         getPocketBase().collection('wallets').create(record).catch(() => {})
         return record
@@ -88,7 +88,7 @@ export function useWallet() {
           created: now,
           updated: now,
         }
-        addWallet(record)
+        await addWallet(record)
         setWallets((prev) => [record, ...prev])
         getPocketBase().collection('wallets').create(record).catch(() => {})
         return record
