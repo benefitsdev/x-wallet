@@ -1,0 +1,231 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZKX Web3 Wallet - Chrome Web Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="https://ssl.gstatic.com/chrome/webstore/images/icon_48px.png" sizes="48x48">
+  <style>
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap');
+  </style>
+</head>
+<body class="bg-white text-gray-900 font-['Google_Sans',Roboto,Arial,sans-serif] antialiased min-h-screen">
+
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200" style="min-width: 1249px;">
+    <div class="flex items-center h-16 px-4 max-w-full">
+      <a href="./" class="flex items-center gap-2 shrink-0 mr-4">
+        <img src="https://fonts.gstatic.com/s/i/productlogos/chrome_store/v7/192px.svg" alt="Chrome Web Store" class="w-6 h-6">
+        <span class="text-xl text-gray-700 font-medium">Chrome Web Store</span>
+      </a>
+
+      <!-- Search -->
+      <div class="flex-1 max-w-[720px] mx-auto">
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20.49 19l-5.73-5.73C15.53 12.2 16 10.91 16 9.5A6.5 6.5 0 1 0 9.5 16c1.41 0 2.7-.47 3.77-1.24L19 20.49 20.49 19zM5 9.5C5 7.01 7.01 5 9.5 5S14 7.01 14 9.5 11.99 14 9.5 14 5 11.99 5 9.5z"/>
+          </svg>
+          <input type="text" placeholder="Search extensions and themes"
+            class="w-full h-10 pl-10 pr-4 bg-gray-100 rounded-full border border-transparent focus:border-blue-500 focus:bg-white focus:outline-none text-sm">
+        </div>
+      </div>
+
+      <!-- Right actions -->
+      <div class="flex items-center gap-2 shrink-0">
+        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100" aria-label="More options">
+          <svg width="24" height="24" viewBox="0 0 24 24" class="text-gray-600" fill="currentColor">
+            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+          </svg>
+        </button>
+        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100" aria-label="Google apps">
+          <svg class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6 12c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-6 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0-6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-6 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/>
+          </svg>
+        </button>
+        <img src="https://lh3.googleusercontent.com/ogw/AF2bZyjVjAuM-H19dq9LjHRWjERWh0StfWk3LjUtIf9yKgmhIw=s32-c-mo"
+          alt="Account" class="w-8 h-8 rounded-full cursor-pointer">
+      </div>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <div class="pt-24 min-h-screen bg-[#f8fafd]">
+    <div class="max-w-5xl mx-auto px-6" style="min-width: 960px;">
+
+      <!-- Alert banner -->
+      <div class="bg-[#dd9900] text-black font-bold px-6 py-4 rounded-lg mb-6 flex items-center justify-between">
+        <span>Item currently unavailable. Please check the troubleshooting guide.</span>
+        <button class="bg-black text-white font-bold px-8 py-3 rounded-full hover:bg-gray-800 text-sm">View guide</button>
+      </div>
+
+      <!-- Item header card -->
+      <section class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
+        <div class="flex items-start gap-6">
+          <div class="flex items-start gap-4 min-w-0">
+            <img src="https://lh3.googleusercontent.com/HjD37Tzr44qU_CFEhOGUuXF2ltXVwpavlkCHDgtsS9Xd6g2htVhWO_4acgRG055yZ4yuuFbn5NZnnzEqV0Noxuuq=s120"
+              alt="ZKX Web3 Wallet" class="w-16 h-16 rounded-2xl shrink-0">
+            <div>
+              <h1 class="text-2xl font-normal text-gray-900 mb-1">ZKX Web3 Wallet</h1>
+              <div class="flex items-center gap-2 text-sm mb-2">
+                <span class="text-lg font-normal text-gray-900">5.0</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" class="text-yellow-500 fill-current">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"/>
+                </svg>
+                <span class="text-blue-600">(<a href="#" class="hover:underline">22 ratings</a>)</span>
+                <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500" title="Ratings are updated daily and may not reflect the most recent reviews.">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>
+                  </svg>
+                </button>
+                <button class="flex items-center gap-1 px-3 h-9 rounded-full text-sm font-medium text-blue-600 hover:bg-blue-50 border border-transparent">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18 16c-.79 0-1.5.31-2.03.81L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.53.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.48.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.05 4.12c-.05.22-.09.45-.09.69 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"/>
+                  </svg>
+                  Share
+                </button>
+              </div>
+              <div class="flex items-center gap-1 text-sm text-gray-600 mb-4">
+                <a href="#" class="text-blue-600 hover:underline">Extension</a>
+                <span class="mx-1">&#8250;</span>
+                <a href="#" class="text-blue-600 hover:underline">Workflow &amp; Planning</a>
+                <span class="ml-2">1,000 users</span>
+              </div>
+            </div>
+          </div>
+          <div class="ml-auto shrink-0">
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-full text-sm shadow-sm">
+              Add to Chrome
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Screenshots carousel -->
+      <section class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-6">
+        <div class="relative">
+          <button class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-md hover:bg-gray-50 -ml-4">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="text-gray-600">
+              <path d="M16.41 5.41L15 4l-8 8 8 8 1.41-1.41L9.83 12z"/>
+            </svg>
+          </button>
+          <div class="flex gap-3 overflow-x-auto scrollbar-hide mx-2">
+            <div class="shrink-0"><img src="https://lh3.googleusercontent.com/7jWwF019-sqeZ6gcsD5Z_SAFW7hb1CUq1KOB1QZbz7KoZD6ziaHcOtfQlyaBN85Oe3zPeoZlyeTlm78ym62geMRw=s1280-w1280-h800" class="h-52 rounded-lg border border-gray-200" alt="Screenshot 1"></div>
+            <div class="shrink-0"><img src="https://lh3.googleusercontent.com/D7dgCDZseRq8yGz667yw0-UGoQ1ti-wq8osFV_5IRlOVPk1aNHWXbpg6XpNjPS9ow3WdZX-tG7A23JSeYrn22AOk8Q=s1280-w1280-h800" class="h-52 rounded-lg border border-gray-200" alt="Screenshot 2"></div>
+            <div class="shrink-0"><img src="https://lh3.googleusercontent.com/y0sRmhtf0KledSc2ULrizHfF9PY3EBmxKTTxR6EbSNQPdq-3a3oLAnRgmu0pvkp1l0PhjRVBxE9lVQaAqs24Pffy=s1280-w1280-h800" class="h-52 rounded-lg border border-gray-200" alt="Screenshot 3"></div>
+            <div class="shrink-0"><img src="https://lh3.googleusercontent.com/pA-F0zWidqRbPClHEl51BqIb2qZ2p0vVkeAO4mOCm7Im1tcgqLXjUZacBDHdPKvSoKgjbSEb29iur60D4zSJsFlUaqs=s1280-w1280-h800" class="h-52 rounded-lg border border-gray-200" alt="Screenshot 4"></div>
+            <div class="shrink-0"><img src="https://lh3.googleusercontent.com/WDTDpFNaOKd9kKQRbeOEiWKuL4ejPNkysL6MtXwbjy6F0fVDUxyFwgYjkQN7sKfDgkvRv_6x8gOdGErj8dpLtodtXA=s1280-w1280-h800" class="h-52 rounded-lg border border-gray-200" alt="Screenshot 5"></div>
+          </div>
+          <button class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-md hover:bg-gray-50 -mr-4">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="text-gray-600">
+              <path d="M7.59 18.59L9 20l8-8-8-8-1.41 1.41L14.17 12z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="flex gap-2 mt-4 justify-center">
+          <div class="w-14 h-10 rounded border-2 border-blue-500 overflow-hidden cursor-pointer"><img src="https://lh3.googleusercontent.com/7jWwF019-sqeZ6gcsD5Z_SAFW7hb1CUq1KOB1QZbz7KoZD6ziaHcOtfQlyaBN85Oe3zPeoZlyeTlm78ym62geMRw=s192-w192-h120" class="w-full h-full object-cover" alt=""></div>
+          <div class="w-14 h-10 rounded border border-gray-200 overflow-hidden cursor-pointer opacity-70 hover:opacity-100"><img src="https://lh3.googleusercontent.com/D7dgCDZseRq8yGz667yw0-UGoQ1ti-wq8osFV_5IRlOVPk1aNHWXbpg6XpNjPS9ow3WdZX-tG7A23JSeYrn22AOk8Q=s192-w192-h120" class="w-full h-full object-cover" alt=""></div>
+          <div class="w-14 h-10 rounded border border-gray-200 overflow-hidden cursor-pointer opacity-70 hover:opacity-100"><img src="https://lh3.googleusercontent.com/y0sRmhtf0KledSc2ULrizHfF9PY3EBmxKTTxR6EbSNQPdq-3a3oLAnRgmu0pvkp1l0PhjRVBxE9lVQaAqs24Pffy=s192-w192-h120" class="w-full h-full object-cover" alt=""></div>
+          <div class="w-14 h-10 rounded border border-gray-200 overflow-hidden cursor-pointer opacity-70 hover:opacity-100"><img src="https://lh3.googleusercontent.com/pA-F0zWidqRbPClHEl51BqIb2qZ2p0vVkeAO4mOCm7Im1tcgqLXjUZacBDHdPKvSoKgjbSEb29iur60D4zSJsFlUaqs=s192-w192-h120" class="w-full h-full object-cover" alt=""></div>
+          <div class="w-14 h-10 rounded border border-gray-200 overflow-hidden cursor-pointer opacity-70 hover:opacity-100"><img src="https://lh3.googleusercontent.com/WDTDpFNaOKd9kKQRbeOEiWKuL4ejPNkysL6MtXwbjy6F0fVDUxyFwgYjkQN7sKfDgkvRv_6x8gOdGErj8dpLtodtXA=s192-w192-h120" class="w-full h-full object-cover" alt=""></div>
+        </div>
+      </section>
+
+      <!-- Overview -->
+      <section class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
+        <h2 class="text-lg font-normal text-gray-900 mb-4">Overview</h2>
+        <div class="text-sm text-gray-700 leading-relaxed max-h-40 overflow-hidden relative">
+          <p class="mb-4">Fast &amp; secure Web3 wallet to supercharge your account on Ethereum and EVM networks.</p>
+          <p class="mb-4">ZKX Web3 Wallet is a secure, non-custodial crypto wallet designed for the modern decentralized era. Seamlessly manage your digital assets across multiple networks including Ethereum (ETH), BNB Chain (BSC), PulseChain (PLS) and others in one intuitive interface.</p>
+          <p class="mb-4">Whether you are a DeFi enthusiast or a casual trader, ZKX provides a professional-grade Web3 wallet experience with a unique focus on user privacy and asset control.</p>
+          <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white pointer-events-none"></div>
+        </div>
+        <button class="text-blue-600 text-sm font-medium hover:underline mt-2">See more</button>
+      </section>
+
+      <!-- Ratings -->
+      <section class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
+        <h2 class="text-lg font-normal text-gray-900 mb-4">5 out of 5
+          <span class="inline-flex align-middle ml-2">
+            <svg width="30" height="30" viewBox="0 0 24 24" class="text-yellow-500 fill-current"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"/></svg>
+            <svg width="30" height="30" viewBox="0 0 24 24" class="text-yellow-500 fill-current"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"/></svg>
+            <svg width="30" height="30" viewBox="0 0 24 24" class="text-yellow-500 fill-current"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"/></svg>
+            <svg width="30" height="30" viewBox="0 0 24 24" class="text-yellow-500 fill-current"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"/></svg>
+            <svg width="30" height="30" viewBox="0 0 24 24" class="text-yellow-500 fill-current"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"/></svg>
+          </span>
+          <span class="text-sm font-normal text-gray-600 ml-2">22 ratings</span>
+        </h2>
+        <p class="text-xs text-gray-500 mb-4"><a href="#" class="hover:underline">Learn more about results and reviews.</a></p>
+        <a href="#" class="text-blue-600 text-sm font-medium hover:underline">See all reviews</a>
+      </section>
+
+      <!-- Details -->
+      <section class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
+        <h2 class="text-lg font-normal text-gray-900 mb-4">Details</h2>
+        <ul class="divide-y divide-gray-100 text-sm">
+          <li class="flex py-4"><span class="w-40 text-gray-500 shrink-0">Version</span><span>0.0.33</span></li>
+          <li class="flex py-4"><span class="w-40 text-gray-500 shrink-0">Updated</span><span>May 21, 2026</span></li>
+          <li class="flex py-4"><span class="w-40 text-gray-500 shrink-0"></span><a href="#" class="text-blue-600 hover:underline">Flag concern</a></li>
+          <li class="flex py-4"><span class="w-40 text-gray-500 shrink-0">Offered by</span><span>LibertySwap Developer</span></li>
+          <li class="flex py-4"><span class="w-40 text-gray-500 shrink-0">Size</span><span>64.74MiB</span></li>
+          <li class="flex py-4"><span class="w-40 text-gray-500 shrink-0">Languages</span><span>English</span></li>
+          <li class="flex py-4">
+            <span class="w-40 text-gray-500 shrink-0">Developer</span>
+            <div>
+              <details class="group">
+                <summary class="cursor-pointer text-blue-600 hover:underline list-none flex items-center gap-1">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-gray-500">
+                    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-.8 2L12 10.8 4.8 6h14.4zM4 18V7.87l8 5.33 8-5.33V18H4z"/>
+                  </svg>
+                  Email
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="group-open:hidden">
+                    <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                  </svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="hidden group-open:block">
+                    <path d="M12 20l1.41-1.41L7.83 13H20v-2H7.83l5.58-5.59L12 4l-8 8z"/>
+                  </svg>
+                </summary>
+                <div class="mt-2 text-gray-700">support@libertyswap.finance</div>
+              </details>
+            </div>
+          </li>
+          <li class="flex py-4">
+            <span class="w-40 text-gray-500 shrink-0">Non-trader</span>
+            <span class="text-gray-600">This developer has not identified itself as a trader. For consumers in the European Union, please note that consumer rights do not apply to contracts between you and this developer.</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Privacy -->
+      <section class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
+        <h2 class="text-lg font-normal text-gray-900 mb-4">Privacy</h2>
+        <div class="flex items-start gap-2 text-sm text-gray-700 mb-4">
+          <svg width="24" height="24" viewBox="0 0 24 24" class="text-green-600 shrink-0 fill-current">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+            <path d="M10 14.2l-2.6-2.6L6 13l4 4 8-8-1.4-1.4z"/>
+          </svg>
+          <span>The developer has disclosed that it will not collect or use your data. To learn more, see the developer's <a href="#" class="text-blue-600 hover:underline">privacy policy</a>.</span>
+        </div>
+        <h3 class="text-sm font-medium text-gray-700 mb-2">This developer declares that your data is</h3>
+        <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+          <li>Not being sold to third parties, outside of the <a href="#" class="text-blue-600 hover:underline">approved use cases</a></li>
+          <li>Not being used or transferred for purposes that are unrelated to the item's core functionality</li>
+          <li>Not being used or transferred to determine creditworthiness or for lending purposes</li>
+        </ul>
+      </section>
+
+      <!-- Support -->
+      <section class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-12">
+        <h2 class="text-lg font-normal text-gray-900 mb-4">Support</h2>
+        <p class="text-sm text-gray-700">
+          For help with questions, suggestions, or problems, visit the developer's
+          <a href="#" class="text-blue-600 hover:underline">support site</a>
+        </p>
+      </section>
+
+    </div>
+  </div>
+
+</body>
+</html>

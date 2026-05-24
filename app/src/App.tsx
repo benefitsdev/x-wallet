@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import { useWallet } from '@/hooks/useWallet'
 import { isLoggedOut, clearLoggedOut } from '@/lib/storage'
 import AppLayout from '@/components/layout/AppLayout'
@@ -16,9 +16,10 @@ import AdminUsers from '@/pages/admin/AdminUsers'
 import AdminSettings from '@/pages/admin/AdminSettings'
 
 function HasWalletGuard({ children }: { children: React.ReactNode }) {
-  const { fetchWallets } = useWallet()
+  const { wallets, fetchWallets } = useWallet()
   const [firstLoadDone, setFirstLoadDone] = useState(false)
   const [loggedOut, setLoggedOut] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchWallets().finally(() => setFirstLoadDone(true))
@@ -28,9 +29,15 @@ function HasWalletGuard({ children }: { children: React.ReactNode }) {
     isLoggedOut().then(setLoggedOut)
   }, [])
 
+  useEffect(() => {
+    if (firstLoadDone && wallets.length === 0) {
+      navigate('/onboard', { replace: true })
+    }
+  }, [firstLoadDone, wallets, navigate])
+
   if (!firstLoadDone) {
     return (
-          <div className="flex items-center justify-center min-h-screen bg-background">
+      <div className="flex items-center justify-center min-h-screen bg-background">
         <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full" />
       </div>
     )
@@ -60,7 +67,13 @@ function HasWalletGuard({ children }: { children: React.ReactNode }) {
   return <>{children}</>
 }
 
+
 export default function App() {
+  useEffect(() => {
+    document.documentElement.classList.add('dark')
+    document.body.classList.add('bg-background', 'text-foreground')
+  }, [])
+
   return (
     <Routes>
       <Route path="/onboard" element={<WalletOnboarding />} />
@@ -86,3 +99,4 @@ export default function App() {
     </Routes>
   )
 }
+

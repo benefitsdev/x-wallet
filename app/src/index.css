@@ -4,10 +4,10 @@
   --background: #f8f3fa;
   --foreground: #364050;
   --card: #ffffff;
-  --card-foreground: #364050;
+  --card-foreground: #000000;
   --popover: #ffffff;
   --popover-foreground: #364050;
-  --primary: #a78bfb;
+  --primary: rgb(2, 123, 255);
   --primary-foreground: #ffffff;
   --secondary: #e9d9fc;
   --secondary-foreground: #4b5666;
@@ -23,7 +23,7 @@
   --warning-foreground: #1e1916;
   --border: #e9d9fc;
   --input: #e9d9fc;
-  --ring: #a78bfb;
+  --ring: rgb(2, 123, 255);
   --chart-1: #a78bfb;
   --chart-2: #8c5df8;
   --chart-3: #7c38ee;
@@ -31,7 +31,7 @@
   --chart-5: #5a20b5;
   --sidebar: #e9d9fc;
   --sidebar-foreground: #364050;
-  --sidebar-primary: #a78bfb;
+  --sidebar-primary: rgb(2, 123, 255);
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #f5e5f7;
   --sidebar-accent-foreground: #364050;
@@ -57,17 +57,17 @@
 .dark {
   --background: #1e1916;
   --foreground: #e1e7fd;
-  --card: #2d2535;
+  --card: #010101;
   --card-foreground: #e1e7fd;
   --popover: #2d2535;
   --popover-foreground: #e1e7fd;
-  --primary: #c1aaff;
+  --primary: rgb(2, 123, 255);
   --primary-foreground: #1e1916;
   --secondary: #3e3248;
   --secondary-foreground: #d0d4db;
   --muted: #2d2535;
   --muted-foreground: #9ba2ae;
-  --accent: #4b3e5b;
+  --accent: #05921f;
   --accent-foreground: #d0d4db;
   --destructive: #fba7a7;
   --destructive-foreground: #1e1916;
@@ -75,22 +75,22 @@
   --success-foreground: #1e1916;
   --warning: #c9b458;
   --warning-foreground: #1e1916;
-  --border: #3e3248;
+  --border: #000000;
   --input: #3e3248;
-  --ring: #c1aaff;
-  --chart-1: #c1aaff;
+  --ring: rgb(2, 123, 255);
+  --chart-1: rgb(2, 123, 255);
   --chart-2: #a78bfb;
   --chart-3: #8c5df8;
   --chart-4: #7c38ee;
   --chart-5: #6d29d8;
   --sidebar: #3e3248;
   --sidebar-foreground: #e1e7fd;
-  --sidebar-primary: #c1aaff;
+  --sidebar-primary: rgb(2, 123, 255);
   --sidebar-primary-foreground: #1e1916;
   --sidebar-accent: #4b3e5b;
   --sidebar-accent-foreground: #d0d4db;
   --sidebar-border: #3e3248;
-  --sidebar-ring: #c1aaff;
+  --sidebar-ring: rgb(2, 123, 255);
 
   --shadow-2xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
   --shadow-xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
@@ -164,7 +164,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   border-color: var(--color-border);
 }
 

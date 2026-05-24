@@ -10,10 +10,15 @@ import ConfirmationScreen from '@/components/wallet/ConfirmationScreen'
 import ReadyScreen from '@/components/wallet/ReadyScreen'
 import { createRandomWallet } from '@/lib/ethers'
 
+const isPopup = typeof chrome !== 'undefined' && !!chrome.runtime?.id && window.location.pathname.includes('popup.html')
+
 type Step = 'landing' | 'security' | 'create' | 'import' | 'loading_confirm' | 'confirm' | 'ready'
 
 export default function WalletOnboarding() {
   const navigate = useNavigate()
+  const containerClasses = isPopup
+    ? 'w-[400px] h-[600px] overflow-hidden'
+    : 'min-h-screen'
   const { wallets, fetchWallets, createWallet, importWallet } = useWallet()
   const [step, setStep] = useState<Step>('landing')
   const [generatedMnemonic, setGeneratedMnemonic] = useState('')
@@ -103,7 +108,7 @@ export default function WalletOnboarding() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <div className={`${containerClasses} bg-background flex items-center justify-center p-4`}>
       <div className="w-full max-w-2xl">
         {error && (
           <div className="text-sm text-destructive bg-destructive/10 rounded-lg p-3 mb-4 text-center">

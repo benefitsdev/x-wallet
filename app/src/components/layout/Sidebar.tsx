@@ -85,7 +85,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             </NavLink>
           ))}
 
-          <div className="border-t border-border my-3" />
+          {/* <div className="border-t border-border my-3" />
           <p className="px-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
             Admin
           </p>
@@ -107,7 +107,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               <Icon size={18} />
               {label}
             </NavLink>
-          ))}
+          ))} */}
 
           <div className="border-t border-border my-3" />
           <button
