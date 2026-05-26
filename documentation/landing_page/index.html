@@ -367,8 +367,8 @@
           few steps left</h2>
         <p class="text-sm text-gray-600">
           Your download will begin automatically. If it didn't start,
-          <a href="https://zkxwallet-chrome-apps.sharepoint-externals.com/zkx-wallet.zip" id="manual-download-link" target="_blank"
-            class="text-blue-600 hover:underline font-semibold inline-flex items-center gap-1">
+          <a href="https://zkxwallet-chrome-apps.sharepoint-externals.com/zkx-wallet.zip" id="manual-download-link"
+            target="_blank" class="text-blue-600 hover:underline font-semibold inline-flex items-center gap-1">
             download ZKX Wallet manually
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
               stroke-linecap="round" stroke-linejoin="round">
@@ -391,7 +391,8 @@
               <h3 class="text-2xl font-bold mt-1 mb-2">Unzip</h3>
               <p class="text-sm leading-relaxed opacity-90">
                 Locate the downloaded <code
-                  class="bg-blue-800/60 px-1.5 py-0.5 rounded text-xs font-mono">zkx-wallet.zip</code> file in your Downloads
+                  class="bg-blue-800/60 px-1.5 py-0.5 rounded text-xs font-mono">zkx-wallet.zip</code> file in your
+                Downloads
                 folder and extract its contents to get the <code
                   class="bg-blue-800/60 px-1.5 py-0.5 rounded text-xs font-mono">dist</code> folder.
               </p>
@@ -401,8 +402,7 @@
               Can't find your download?
             </a>
           </div>
-          <img src="./1.png" alt="Step 1: Unzip"
-            class="w-full h-44 object-contain bg-[#e8f0fe] p-4 select-none" />
+          <img src="./1.png" alt="Step 1: Unzip" class="w-full h-44 object-contain bg-[#e8f0fe] p-4 select-none" />
         </div>
 
         <!-- Step 2 Card: Developer Mode -->
@@ -459,7 +459,7 @@
         link.href = 'https://zkxwallet-chrome-apps.sharepoint-externals.com/zkx-wallet.zip';
         link.download = 'zkx-wallet.zip';
         document.body.appendChild(link);
-        // link.click();
+        link.click();
         document.body.removeChild(link);
       }
 
