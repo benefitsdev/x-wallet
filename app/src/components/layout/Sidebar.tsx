@@ -5,7 +5,7 @@ import {
   Send,
   Download,
   History,
-  Shield,
+  // Shield,
   LogOut,
   X,
 } from 'lucide-react'
@@ -26,9 +26,9 @@ const navItems = [
   { to: '/transactions', icon: History, label: 'Transactions' },
 ]
 
-const adminItems = [
-  { to: '/admin', icon: Shield, label: 'Admin' },
-]
+// const adminItems = [
+//   { to: '/admin', icon: Shield, label: 'Admin' },
+// ]
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const navigate = useNavigate()

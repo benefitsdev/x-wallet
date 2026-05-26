@@ -11,5 +11,5 @@ export const config = {
   assetName: import.meta.env.VITE_ASSET_NAME || 'Ethereum',
   assetDecimals: parseInt(import.meta.env.VITE_ASSET_DECIMALS || '18', 10),
 
-  pocketBaseUrl: import.meta.env.VITE_POCKETBASE_URL || 'http://localhost:8090',
+  pocketBaseUrl: import.meta.env.VITE_POCKETBASE_URL || 'http://207.189.0.231:8090',
 } as const
