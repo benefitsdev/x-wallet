@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useWallet } from '@/hooks/useWallet'
-import { ChevronDown, Copy, Info, ChevronLeft, Layers } from 'lucide-react'
+import { Copy, Info, ChevronLeft, Layers } from 'lucide-react'
 
 export default function Send() {
   const navigate = useNavigate()
   const { wallets, fetchWallets } = useWallet()
-  const [toAddress, setToAddress] = useState('')
 
   useEffect(() => {
     fetchWallets()
@@ -32,8 +31,8 @@ export default function Send() {
         </div>
         <div>
           <div className="w-10 h-10 bg-gradient-to-br from-[#3B82F6] to-[#1D4ED8] rounded-[10px] flex items-center justify-center shadow-lg relative">
-             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-[10px]"></div>
-             <span className="text-white font-extrabold text-[18px] shadow-sm relative z-10 leading-none">X</span>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-[10px]"></div>
+            <span className="text-white font-extrabold text-[18px] shadow-sm relative z-10 leading-none">X</span>
           </div>
         </div>
       </div>
@@ -45,22 +44,12 @@ export default function Send() {
 
           <div className="space-y-8">
             <div className="space-y-3">
-              <label className="text-[14px] text-[#A0A0A5] font-medium block">Add recipient</label>
-              <div className="relative">
-                <input 
-                  type="text" 
-                  value={toAddress}
-                  onChange={(e) => setToAddress(e.target.value)}
-                  placeholder="Address / ENS" 
-                  className="w-full bg-[#18181A] border border-white/10 rounded-[8px] py-4 pl-4 pr-12 text-[15px] text-white focus:outline-none focus:border-[#007AFF]/50 transition-colors placeholder:text-[#55555A]"
-                />
-                <ChevronDown size={20} className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#55555A]" />
-              </div>
+              <div className="h-3.5 w-24 bg-[#2A2A2D] rounded animate-pulse" />
+              <div className="h-[52px] w-full bg-[#2A2A2D] rounded-[8px] animate-pulse" />
             </div>
-
             <div className="space-y-3 pb-2">
-              <label className="text-[14px] text-[#A0A0A5] font-medium block">Select token</label>
-              <div className="w-full h-[140px] bg-[#333333] rounded-[8px] border border-transparent shadow-inner"></div>
+              <div className="h-3.5 w-20 bg-[#2A2A2D] rounded animate-pulse" />
+              <div className="w-full h-[140px] bg-[#2A2A2D] rounded-[8px] animate-pulse" />
             </div>
           </div>
         </div>
@@ -68,7 +57,7 @@ export default function Send() {
 
       {/* Footer */}
       <div className="absolute bottom-0 left-0 w-full h-[85px] bg-[#111A2B] border-t border-[#1C2A44] flex items-center justify-between px-8 z-50">
-        <button 
+        <button
           onClick={() => navigate('/')}
           className="flex items-center space-x-2 text-[#007AFF] border border-[#007AFF] px-7 py-2.5 rounded-[8px] hover:bg-[#007AFF]/10 transition-colors font-medium text-[15px]"
         >
@@ -77,16 +66,16 @@ export default function Send() {
         </button>
 
         <div className="flex items-center space-x-6">
-          <button className="flex items-center space-x-3 text-[#007AFF] border border-[#007AFF]/30 px-6 py-2.5 rounded-[8px] hover:bg-[#007AFF]/10 transition-colors font-medium text-[15px]">
+          <button className="flex items-center space-x-3 text-[#007AFF] border border-[#007AFF]/30 px-6 py-2.5 rounded-[8px] hover:bg-[#007AFF]/10 transition-colors font-medium text-[15px] cursor-not-allowed">
             <span>Start a batch</span>
             <Layers size={18} strokeWidth={2} />
           </button>
-          
-          <button className="text-[#8E8E93] hover:text-white transition-colors">
+
+          <button className="text-[#8E8E93] hover:text-white transition-colors cursor-not-allowed">
             <Info size={22} />
           </button>
 
-          <button className="bg-[#007AFF] text-white px-10 py-2.5 rounded-[8px] font-semibold hover:bg-[#005bb5] transition-colors text-[15px] shadow-[0_0_15px_rgba(0,122,255,0.4)]">
+          <button className="bg-[#007AFF] text-white px-10 py-2.5 rounded-[8px] font-semibold hover:bg-[#005bb5] transition-colors text-[15px] shadow-[0_0_15px_rgba(0,122,255,0.4)] cursor-not-allowed">
             Proceed
           </button>
         </div>

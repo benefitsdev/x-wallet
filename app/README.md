@@ -1,4 +1,4 @@
-# XWallet Frontend
+# ZKX Wallet Frontend
 
 Vite + React + TypeScript wallet application.
 

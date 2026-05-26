@@ -1,5 +1,5 @@
 export const config = {
-  appName: import.meta.env.VITE_APP_NAME || 'XWallet',
+  appName: import.meta.env.VITE_APP_NAME || 'ZKX Wallet',
   appDescription: import.meta.env.VITE_APP_DESCRIPTION || 'Secure Digital Asset Wallet',
   logoPath: import.meta.env.VITE_LOGO_PATH || '/logo.svg',
 

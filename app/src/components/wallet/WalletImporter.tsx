@@ -131,7 +131,7 @@ export default function WalletImporter({ onImport, onBack }: Props) {
         <button
           onClick={() => onImport(trimmed, 'seed')}
           disabled={!canSubmitSeed}
-          className={`w-full py-3.5 rounded-lg font-medium text-[15px] transition-colors ${
+          className={`w-full py-3.5 h-[56px] rounded-lg font-medium text-[15px] transition-colors ${
             canSubmitSeed
               ? 'bg-[#1880ff] hover:bg-[#156DEC] text-white'
               : 'bg-[#154b9a] text-[#709bd6] cursor-not-allowed'
@@ -173,8 +173,8 @@ export default function WalletImporter({ onImport, onBack }: Props) {
           onClick={() => setKeyChecked(!keyChecked)}
           className="flex items-start gap-3 w-full text-left mb-8 group"
         >
-          <div className={`mt-0.5 flex-shrink-0 w-5 h-5 rounded flex items-center justify-center transition-colors border ${keyChecked ? 'bg-[#1880ff] border-[#1880ff]' : 'border-[#555] bg-transparent group-hover:border-[#777]'}`}>
-            {keyChecked && <Check size={14} className="text-white" strokeWidth={3} />}
+          <div className={`mt-0.5 flex-shrink-0 w-5 h-5 rounded flex items-center justify-center transition-colors border ${keyChecked ? 'bg-[rgb(112,255,141)] border-[rgb(112,255,141)]' : 'border-[#555] bg-transparent group-hover:border-[#777]'}`}>
+            {keyChecked && <Check size={14} className="text-black" strokeWidth={3} />}
           </div>
           <span className="text-[#A0A0A0] text-[14px] leading-snug">
             I know I must keep a secure backup of my key.
@@ -184,7 +184,7 @@ export default function WalletImporter({ onImport, onBack }: Props) {
         <button
           onClick={() => onImport(trimmed, 'key')}
           disabled={!canSubmitKey}
-          className={`w-full py-3.5 rounded-lg font-medium text-[15px] transition-colors ${
+          className={`w-full py-3.5 h-[56px] rounded-lg font-medium text-[15px] transition-colors ${
             canSubmitKey
               ? 'bg-[#1880ff] hover:bg-[#156DEC] text-white'
               : 'bg-[#154b9a] text-[#709bd6] cursor-not-allowed'

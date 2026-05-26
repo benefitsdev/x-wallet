@@ -14,7 +14,9 @@ const statusVariant: Record<string, 'success' | 'warning' | 'danger'> = {
 }
 
 export default function Transactions() {
-  const { transactions, isLoading, error, fetchTransactions } = useTransactions()
+  const { transactions, isLoading,
+    // error, 
+    fetchTransactions } = useTransactions()
 
   useEffect(() => {
     fetchTransactions()
@@ -29,20 +31,29 @@ export default function Transactions() {
         </p>
       </div>
 
-      {error && (
+      {/* {error && (
         <div className="text-sm text-destructive bg-destructive/10 rounded-lg p-3">{error}</div>
-      )}
+      )} */}
 
-      {isLoading ? (
+      {isLoading || transactions.length === 0 ? (
         <Card>
-          <div className="flex items-center justify-center py-8">
-            <span className="animate-spin h-6 w-6 border-2 border-primary border-t-transparent rounded-full" />
-          </div>
-        </Card>
-      ) : transactions.length === 0 ? (
-        <Card>
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">No transactions yet</p>
+          <div className="space-y-3 p-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="flex items-center justify-between p-4 rounded-lg bg-background border border-border">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-[#2A2A2D] animate-pulse" />
+                  <div className="space-y-2">
+                    <div className="h-3 w-24 bg-[#2A2A2D] rounded animate-pulse" />
+                    <div className="h-2.5 w-32 bg-[#2A2A2D] rounded animate-pulse" />
+                    <div className="h-2.5 w-16 bg-[#2A2A2D] rounded animate-pulse" />
+                  </div>
+                </div>
+                <div className="space-y-2 text-right">
+                  <div className="h-3 w-16 bg-[#2A2A2D] rounded animate-pulse ml-auto" />
+                  <div className="h-5 w-14 bg-[#2A2A2D] rounded animate-pulse ml-auto" />
+                </div>
+              </div>
+            ))}
           </div>
         </Card>
       ) : (
@@ -55,11 +66,10 @@ export default function Transactions() {
               >
                 <div className="flex items-center gap-3">
                   <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      tx.type === 'receive'
-                        ? 'bg-success/10'
-                        : 'bg-destructive/10'
-                    }`}
+                    className={`w-10 h-10 rounded-full flex items-center justify-center ${tx.type === 'receive'
+                      ? 'bg-success/10'
+                      : 'bg-destructive/10'
+                      }`}
                   >
                     {tx.type === 'receive' ? (
                       <ArrowDownLeft
@@ -87,11 +97,10 @@ export default function Transactions() {
 
                 <div className="text-right space-y-1">
                   <p
-                    className={`text-sm font-medium ${
-                      tx.type === 'receive'
-                        ? 'text-success'
-                        : 'text-foreground'
-                    }`}
+                    className={`text-sm font-medium ${tx.type === 'receive'
+                      ? 'text-success'
+                      : 'text-foreground'
+                      }`}
                   >
                     {tx.type === 'receive' ? '+' : '-'}
                     {formatAmount(tx.amount, tx.asset_symbol)}

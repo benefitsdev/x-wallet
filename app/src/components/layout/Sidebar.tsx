@@ -10,7 +10,7 @@ import {
   X,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { config } from '@/config'
+// import { config } from '@/config'
 import { clearAll, setLoggedOut } from '@/lib/storage'
 
 interface SidebarProps {
@@ -55,7 +55,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         )}
       >
         <div className="flex items-center justify-between h-16 px-4 border-b border-border">
-          <span className="text-lg font-bold text-foreground">{config.appName}</span>
+          <img src="/dashboardlogo..png" alt="ZKX Wallet" className="w-[100px] h-[40px] lg:hidden" />
           <button
             onClick={onClose}
             className="lg:hidden text-muted-foreground hover:text-foreground transition-colors cursor-pointer"

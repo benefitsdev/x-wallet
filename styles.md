@@ -1,8 +1,8 @@
-# XWallet — Design System & Styles
+# ZKX Wallet — Design System & Styles
 
 ## Overview
 
-This document defines the complete visual design system for XWallet. All values are configurable via environment variables (see `.env`). The design targets a modern, secure, high-trust financial aesthetic.
+This document defines the complete visual design system for ZKX Wallet. All values are configurable via environment variables (see `.env`). The design targets a modern, secure, high-trust financial aesthetic.
 
 ## Color Palette
 

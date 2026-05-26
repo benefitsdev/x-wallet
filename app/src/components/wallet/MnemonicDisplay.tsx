@@ -45,7 +45,7 @@ export default function MnemonicDisplay({ mnemonic, onConfirm, onBack }: Props) 
             Write down and secure the recovery phrase for your account.
           </p>
 
-          <div className="grid grid-cols-3 gap-[1px] bg-[#333] border border-[#333] rounded-lg overflow-hidden mb-6">
+          <div className="grid grid-cols-3 gap-[1px] bg-[#333] border border-white/30 rounded-lg overflow-hidden mb-6">
             {words.map((word, i) => (
               <div
                 key={i}
@@ -69,7 +69,7 @@ export default function MnemonicDisplay({ mnemonic, onConfirm, onBack }: Props) 
 
           <button
             onClick={onConfirm}
-            className="w-full py-3.5 rounded-lg font-medium text-[15px] transition-colors bg-[#1880ff] hover:bg-[#156DEC] text-white"
+            className="w-full py-3.5 h-[56px] rounded-lg font-medium text-[15px] transition-colors bg-[#1880ff] hover:bg-[#156DEC] text-white"
           >
             I've saved the phrase
           </button>

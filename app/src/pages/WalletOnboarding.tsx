@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Send } from 'lucide-react'
 import { clearLoggedOut } from '@/lib/storage'
 import { useWallet } from '@/hooks/useWallet'
 import OnboardingLanding from '@/components/wallet/OnboardingLanding'
@@ -144,7 +145,9 @@ export default function WalletOnboarding() {
 
         {step === 'loading_confirm' && (
           <div className="flex flex-col items-center justify-center space-y-6 py-12">
-            <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+            <div className="text-[#007AFF] animate-bounce">
+              <Send size={48} />
+            </div>
             <h2 className="text-xl font-medium text-foreground animate-pulse">
               Adding wallet...
             </h2>

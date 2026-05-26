@@ -1,4 +1,4 @@
-# XWallet — Implementation Plan
+# ZKX Wallet — Implementation Plan
 
 ## Execution Order (To-Do List)
 

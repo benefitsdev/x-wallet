@@ -13,7 +13,7 @@ export default function OnboardingLanding({ onCreate, onImport }: Props) {
       </div>
 
       <div className="bg-[#111111] rounded-2xl p-8 w-[90%] max-w-[420px] flex flex-col items-center shadow-2xl">
-        <img src="/logo.png" alt="XWallet" className="w-[100px] h-[100px] mb-6" />
+        <img src="/logo.png" alt="ZKX Wallet" className="w-[100px] h-[100px] mb-6" />
 
         <h1 className="text-[#A0A0A0] text-center text-[15px] mb-8 leading-relaxed font-medium px-4">
           The Web3 wallet that makes self-custody<br/>easy and secure.
@@ -21,14 +21,14 @@ export default function OnboardingLanding({ onCreate, onImport }: Props) {
 
         <button
           onClick={onCreate}
-          className="w-full bg-[#1880ff] hover:bg-[#156DEC] text-white font-medium py-3.5 rounded-lg mb-4 transition-colors text-[15px]"
+          className="w-full bg-[#1880ff] hover:bg-[#156DEC] text-white font-medium py-3.5 h-[56px] rounded-lg mb-4 transition-colors text-[15px]"
         >
           Create new account
         </button>
 
         <button
           onClick={onImport}
-          className="w-full bg-transparent border border-[#333] hover:border-[#444] text-[#1880ff] font-medium py-3.5 rounded-lg mb-8 transition-colors text-[15px]"
+          className="w-full bg-transparent border border-[#333] hover:border-[#444] text-[#1880ff] font-medium py-3.5 h-[56px] rounded-lg mb-8 transition-colors text-[15px]"
         >
           Import existing account
         </button>

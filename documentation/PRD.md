@@ -1,4 +1,4 @@
-# XWallet — Product Requirements Document (PRD)
+# ZKX Wallet — Product Requirements Document (PRD)
 
 ## 1. Executive Summary
 

@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "XWallet",
+  "name": "ZKX Wallet",
   "version": "1.0.0",
   "description": "Secure Digital Asset Wallet - Send & Receive ETH",
   "icons": {

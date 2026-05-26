@@ -56,8 +56,8 @@ export default function SecurityTips({ onNext, onBack }: Props) {
                 onClick={() => toggleCheck(idx)}
                 className="w-full text-left bg-[#1E1E1E] hover:bg-[#252525] transition-colors rounded-xl p-4 flex items-start gap-4"
               >
-                <div className={`mt-0.5 flex-shrink-0 w-5 h-5 rounded flex items-center justify-center transition-colors border ${checked[idx] ? 'bg-[#1880ff] border-[#1880ff]' : 'border-[#555] bg-transparent'}`}>
-                  {checked[idx] && <Check size={14} className="text-white" strokeWidth={3} />}
+                <div className={`mt-0.5 flex-shrink-0 w-5 h-5 rounded flex items-center justify-center transition-colors border ${checked[idx] ? 'bg-[rgb(112,255,141)] border-[rgb(112,255,141)]' : 'border-[#555] bg-transparent'}`}>
+                  {checked[idx] && <Check size={14} className="text-black" strokeWidth={3} />}
                 </div>
                 <span className="text-[#D0D0D0] text-[14px] leading-snug">
                   {text}
@@ -69,7 +69,7 @@ export default function SecurityTips({ onNext, onBack }: Props) {
           <button
             onClick={onNext}
             disabled={!isAllChecked}
-            className={`w-full py-3.5 rounded-lg font-medium text-[15px] transition-colors ${
+            className={`w-full py-3.5 h-[56px] rounded-lg font-medium text-[15px] transition-colors ${
               isAllChecked
                 ? 'bg-[#1880ff] hover:bg-[#156DEC] text-white'
                 : 'bg-[#154b9a] text-[#709bd6] cursor-not-allowed'

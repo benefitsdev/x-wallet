@@ -8,6 +8,17 @@ interface Props {
   onComplete?: () => void
 }
 
+const sparkles = [
+  { top: '10%', left: '50%', delay: '0s', size: '4px', color: '#70FF8D' },
+  { top: '28%', left: '14%', delay: '0.25s', size: '5px', color: '#AC77FF' },
+  { top: '68%', left: '8%', delay: '0.5s', size: '4px', color: '#FFC829' },
+  { top: '90%', left: '38%', delay: '0.75s', size: '6px', color: '#70FF8D' },
+  { top: '86%', left: '76%', delay: '0.35s', size: '4px', color: '#6000FF' },
+  { top: '48%', left: '96%', delay: '0.6s', size: '5px', color: '#AC77FF' },
+  { top: '12%', left: '82%', delay: '0.15s', size: '4px', color: '#FFC829' },
+  { top: '4%', left: '22%', delay: '0.45s', size: '5px', color: '#6000FF' },
+]
+
 export default function ConfirmationScreen({ address, label, onComplete }: Props) {
   const navigate = useNavigate()
 
@@ -19,19 +30,37 @@ export default function ConfirmationScreen({ address, label, onComplete }: Props
     }
   }
 
-  // Format address for display (e.g. 0x78c462...4b73A8B)
   const formatAddress = (addr: string) => {
     if (!addr || addr.length < 12) return addr;
     return `${addr.slice(0, 8)}...${addr.slice(-7)}`;
   }
 
   return (
-    <div className="max-w-[400px] mx-auto bg-[#18181A] p-6 rounded-2xl flex flex-col items-center shadow-2xl border border-white/5">
-      <div className="mt-4 mb-6 flex justify-center relative">
-        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="36" cy="36" r="32" stroke="#34C759" strokeWidth="6" strokeLinecap="round" strokeDasharray="140 200" strokeDashoffset="-20" transform="rotate(-90 36 36)" />
-          <path d="M22 38L32 48L52 24" stroke="#34C759" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
+    <>
+      <div className="fixed top-6 right-6">
+        <img src="/logo.png" alt="Logo" className="w-8 h-8" />
+      </div>
+      <div className="max-w-[400px] mx-auto bg-[#18181A] p-6 rounded-2xl flex flex-col items-center shadow-2xl border border-white/5">
+      <div className="mt-4 mb-6 flex justify-center relative w-[200px] h-[140px]">
+        {sparkles.map((dot, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full animate-sparkle"
+            style={{
+              top: dot.top,
+              left: dot.left,
+              width: dot.size,
+              height: dot.size,
+              backgroundColor: dot.color,
+              animationDelay: dot.delay,
+            }}
+          />
+        ))}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <svg width="64" height="64" viewBox="0 0 64 64">
+            <path fill="#70FF8D" d="m18.88 25.925-4.48 4.48 14.4 14.4 32-32-4.475-4.48L28.8 35.68Zm38.72 6.08a25.491 25.491 0 1 1-18.559-24.64L44 2.405a29.766 29.766 0 0 0-12-2.4 32 32 0 1 0 32 32Z"/>
+          </svg>
+        </div>
       </div>
       
       <h2 className="text-[22px] font-bold text-white mb-6">Added successfully</h2>
@@ -55,17 +84,18 @@ export default function ConfirmationScreen({ address, label, onComplete }: Props
 
       <button 
         onClick={handleComplete} 
-        className="w-full bg-[#007AFF] text-white py-3.5 rounded-xl font-semibold mb-3 hover:bg-[#005bb5] transition-colors text-[15px]"
+        className="w-full bg-[#007AFF] text-white py-3.5 h-[56px] rounded-xl font-semibold mb-3 hover:bg-[#005bb5] transition-colors text-[15px]"
       >
         Complete
       </button>
       
       <button 
-        className="text-[#007AFF] font-medium hover:text-[#005bb5] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center space-x-2 w-full bg-[#007AFF]/10 py-3 rounded-xl text-[13px]"
+        className="text-[#007AFF] font-medium hover:text-[#005bb5] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center space-x-2 w-full bg-[#007AFF]/10 py-3 h-[56px] rounded-xl text-[13px]"
       >
         <Plus size={16} />
         <span>Add more accounts from this recovery phrase</span>
       </button>
-    </div>
+      </div>
+    </>
   )
 }

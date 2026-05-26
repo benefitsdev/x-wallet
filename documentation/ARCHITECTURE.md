@@ -1,4 +1,4 @@
-# XWallet — Architecture Document
+# ZKX Wallet — Architecture Document
 
 ## System Architecture
 
@@ -120,7 +120,7 @@ Dashboard loads
 See root `.env` and `app/.env` for the full list.
 
 All frontend branding is driven by `VITE_*` prefixed vars:
-- `VITE_APP_NAME` — brand name (default: "XWallet")
+- `VITE_APP_NAME` — brand name (default: "ZKX Wallet")
 - `VITE_PRIMARY_COLOR` — primary hue (default: indigo)
 - `VITE_BACKGROUND_COLOR` — background (default: slate-900)
 - `VITE_FONT_FAMILY` — typography (default: Inter)
